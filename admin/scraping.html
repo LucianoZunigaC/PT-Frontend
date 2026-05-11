@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejecución de Scraping — Admin ConstructCompare</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body class="admin-body" id="admin-scraping-page">
+
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo"><span class="logo-icon">⚙️</span><div><div class="logo-name">ConstructCompare</div><div class="logo-badge">Panel Admin</div></div></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link"><span class="material-icons">dashboard</span>Dashboard</a>
+      <a href="sources.html" class="sidebar-link"><span class="material-icons">cloud_download</span>Fuentes de Datos</a>
+      <a href="scraping.html" class="sidebar-link active"><span class="material-icons">sync</span>Ejecución Scraping</a>
+      <a href="products.html" class="sidebar-link"><span class="material-icons">inventory_2</span>Productos</a>
+      <a href="matching.html" class="sidebar-link"><span class="material-icons">merge_type</span>Matching / Normalización</a>
+      <a href="categories-admin.html" class="sidebar-link"><span class="material-icons">category</span>Categorías</a>
+      <a href="errors.html" class="sidebar-link"><span class="material-icons">bug_report</span>Errores de Extracción<span class="sidebar-badge">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="../index.html" class="sidebar-link"><span class="material-icons">open_in_new</span>Ver sitio público</a>
+    </nav>
+    <div class="sidebar-user"><span class="material-icons">account_circle</span><div><div style="font-weight:600;font-size:0.875rem">Admin</div><div style="font-size:0.75rem;color:#78909c">admin@constructcompare.cl</div></div></div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="topbar-title">
+        <h1>Ejecución de Scraping</h1>
+        <span class="text-muted" style="font-size:0.875rem">Monitorea y ejecuta actualizaciones del catálogo en tiempo real</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary" id="stop-all-btn"><span class="material-icons">stop</span>Detener todo</button>
+        <button class="btn btn-primary" id="run-all-btn"><span class="material-icons">play_arrow</span>Ejecutar todos</button>
+      </div>
+    </header>
+
+    <!-- Estado global -->
+    <div class="admin-panel" id="panel-global-status" style="margin-bottom:var(--space-md)">
+      <div class="panel-header">
+        <h2 class="panel-title"><span class="material-icons" style="font-size:18px;color:#2e7d32">fiber_manual_record</span>Estado del sistema de extracción</h2>
+        <span class="badge badge-success">En línea</span>
+      </div>
+      <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(245,124,0,0.12);color:var(--primary-container)"><span class="material-icons">sync</span></div>
+          <div class="kpi-info"><div class="kpi-value font-mono">1</div><div class="kpi-label">En ejecución</div></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(46,125,50,0.1);color:#2e7d32"><span class="material-icons">check_circle</span></div>
+          <div class="kpi-info"><div class="kpi-value font-mono">4</div><div class="kpi-label">Exitosas hoy</div></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(186,26,26,0.1);color:var(--error)"><span class="material-icons">cancel</span></div>
+          <div class="kpi-info"><div class="kpi-value font-mono">1</div><div class="kpi-label">Con error hoy</div></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(84,96,103,0.12);color:var(--secondary)"><span class="material-icons">inventory_2</span></div>
+          <div class="kpi-info"><div class="kpi-value font-mono">+342</div><div class="kpi-label">Productos actualizados hoy</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Log de ejecuciones -->
+    <div class="admin-panel" id="panel-scraping-log">
+      <div class="panel-header">
+        <h2 class="panel-title">Log de Ejecuciones — Hoy</h2>
+        <button class="btn btn-secondary btn-sm" id="export-log-btn"><span class="material-icons">download</span>Exportar log</button>
+      </div>
+
+      <!-- Ejecución activa (simulada) -->
+      <div class="scraping-job running" id="job-sodimac-current">
+        <div class="job-header">
+          <div class="job-info">
+            <span class="job-spinner"></span>
+            <strong>Sodimac</strong>
+            <span class="badge" style="background:rgba(245,124,0,0.15);color:var(--primary-container)">En ejecución</span>
+          </div>
+          <div class="job-meta font-mono">Iniciado: 10:00:14</div>
+        </div>
+        <div class="job-progress">
+          <div class="progress-track">
+            <div class="progress-fill" id="sodimac-progress" style="width:63%"></div>
+          </div>
+          <span class="progress-label font-mono">63% — 2.041 / 3.241 productos</span>
+        </div>
+        <div class="job-log-lines" id="job-log-sodimac">
+          <div class="log-line info">[10:00:14] INFO  Iniciando scraping: sodimac.cl/construccion</div>
+          <div class="log-line info">[10:00:15] INFO  Categoría: Materiales Estructurales — 842 productos encontrados</div>
+          <div class="log-line info">[10:00:28] INFO  Categoría: Herramientas Eléctricas — 631 productos encontrados</div>
+          <div class="log-line warn">[10:00:44] WARN  Imagen no disponible (404) — producto SKU: SOD-4892-A</div>
+          <div class="log-line info">[10:00:52] INFO  Categoría: Fijaciones — 568 productos procesados</div>
+        </div>
+      </div>
+
+      <!-- Ejecuciones completadas -->
+      <div class="scraping-job success" id="job-easy-done">
+        <div class="job-header">
+          <div class="job-info">
+            <span class="material-icons" style="color:#2e7d32;font-size:18px">check_circle</span>
+            <strong>Easy</strong>
+            <span class="badge badge-success">Completado</span>
+          </div>
+          <div class="job-meta font-mono">08:55:03 — 09:12:41 (17m 38s)</div>
+        </div>
+        <div class="job-summary">
+          <span class="font-mono">2.890 productos actualizados</span>
+          <span class="text-muted">·</span>
+          <span style="color:#2e7d32" class="font-mono">+128 nuevos</span>
+          <span class="text-muted">·</span>
+          <span class="font-mono">0 errores</span>
+        </div>
+      </div>
+
+      <div class="scraping-job success" id="job-construmart-done">
+        <div class="job-header">
+          <div class="job-info">
+            <span class="material-icons" style="color:#2e7d32;font-size:18px">check_circle</span>
+            <strong>Construmart</strong>
+            <span class="badge badge-success">Completado</span>
+          </div>
+          <div class="job-meta font-mono">07:30:00 — 07:44:19 (14m 19s)</div>
+        </div>
+        <div class="job-summary">
+          <span class="font-mono">1.987 productos actualizados</span>
+          <span class="text-muted">·</span>
+          <span style="color:#2e7d32" class="font-mono">+54 nuevos</span>
+          <span class="text-muted">·</span>
+          <span class="font-mono">0 errores</span>
+        </div>
+      </div>
+
+      <div class="scraping-job error" id="job-homedepot-error">
+        <div class="job-header">
+          <div class="job-info">
+            <span class="material-icons" style="color:var(--error);font-size:18px">cancel</span>
+            <strong>HomeDepot</strong>
+            <span class="badge" style="background:#ffdad6;color:var(--error)">Error</span>
+          </div>
+          <div class="job-meta font-mono">Ayer 18:00:00 — 18:00:45 (45s)</div>
+        </div>
+        <div class="job-log-lines">
+          <div class="log-line error">[18:00:45] ERROR ConnectionTimeoutError: max retries exceeded (3/3)</div>
+          <div class="log-line error">[18:00:45] ERROR Scraping abortado. Próximo reintento en 6h.</div>
+        </div>
+        <div style="margin-top:var(--space-sm)">
+          <a href="errors.html" class="btn btn-sm btn-secondary">Ver error detallado</a>
+          <button class="btn btn-sm btn-primary" style="margin-left:var(--space-xs)" id="retry-homedepot">Reintentar</button>
+        </div>
+      </div>
+
+    </div><!-- /panel-scraping-log -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    // Simular avance de la barra de progreso
+    const bar = document.getElementById('sodimac-progress');
+    let pct = 63;
+    const timer = setInterval(() => {
+      if (pct >= 100) { clearInterval(timer); bar.parentElement.nextElementSibling.textContent = '100% — 3.241 / 3.241 productos'; return; }
+      pct += 1;
+      if(bar) bar.style.width = pct + '%';
+    }, 800);
+
+    document.getElementById('run-all-btn')?.addEventListener('click', () => alert('Ejecutando todos los scrapers (conectar con backend).'));
+    document.getElementById('stop-all-btn')?.addEventListener('click', () => { clearInterval(timer); alert('Scrapers detenidos.'); });
+    document.getElementById('retry-homedepot')?.addEventListener('click', () => alert('Reintentando HomeDepot…'));
+  </script>
+  <style>
+    .scraping-job { border:1px solid var(--surface-container-high); border-radius:var(--radius-lg); padding:var(--space-md); margin-bottom:var(--space-md); }
+    .scraping-job.running { border-color:var(--primary-container); background:rgba(245,124,0,0.04); }
+    .scraping-job.error { border-color:var(--error); background:rgba(186,26,26,0.03); }
+    .job-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--space-sm); }
+    .job-info { display:flex; align-items:center; gap:var(--space-sm); }
+    .job-meta { font-size:0.75rem; color:var(--on-surface-variant); }
+    .job-progress { display:flex; align-items:center; gap:var(--space-md); margin-bottom:var(--space-sm); }
+    .progress-track { flex:1; height:8px; background:var(--surface-container-high); border-radius:var(--radius-pill); overflow:hidden; }
+    .progress-fill { height:100%; background:var(--primary-container); border-radius:var(--radius-pill); transition:width 0.8s ease; }
+    .progress-label { font-size:0.75rem; white-space:nowrap; }
+    .job-log-lines { background:var(--inverse-surface); border-radius:var(--radius); padding:var(--space-sm) var(--space-md); font-size:0.75rem; max-height:120px; overflow-y:auto; }
+    .log-line { padding:1px 0; }
+    .log-line.info { color:#90a4ae; }
+    .log-line.warn { color:#ffb74d; }
+    .log-line.error { color:#ef9a9a; }
+    .job-summary { display:flex; gap:var(--space-md); font-size:0.875rem; }
+    .job-spinner { display:inline-block; width:14px; height:14px; border:2px solid rgba(245,124,0,0.3); border-top-color:var(--primary-container); border-radius:50%; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+  </style>
+</body>
+</html>

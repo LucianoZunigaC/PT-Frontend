@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ConstructCompare — Compara precios de materiales de construcción</title>
+  <meta name="description" content="ConstructCompare es el comparador de precios líder en materiales de construcción, ferretería y herramientas. Encuentra el mejor precio entre múltiples proveedores." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="assets/css/variables.css" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/home.css" />
+</head>
+<body>
+
+  <!-- ══════════ NAVBAR ══════════ -->
+  <nav class="navbar" id="main-navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">Construct<span>Compare</span></a>
+      <form class="navbar-search" action="pages/search.html" method="get" id="hero-search-form">
+        <input type="text" name="q" id="navbar-search-input"
+               placeholder="Buscar materiales, herramientas, marcas…"
+               autocomplete="off" />
+        <button type="submit" class="btn-search">
+          <span class="material-icons" style="font-size:18px">search</span>
+          Buscar
+        </button>
+      </form>
+      <nav class="navbar-links">
+        <a href="pages/categories.html">Categorías</a>
+        <a href="pages/compare.html">Comparar</a>
+        <a href="admin/dashboard.html">Admin</a>
+      </nav>
+    </div>
+  </nav>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero-section" id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="material-icons">bolt</span>
+          Motor de comparación de precios — Construcción &amp; Ferretería
+        </div>
+        <h1 class="hero-title">
+          Compara precios de<br />
+          <span class="hero-highlight">materiales de construcción</span><br />
+          en un solo lugar
+        </h1>
+        <p class="hero-sub">
+          Centraliza catálogos de los grandes proveedores del mercado.
+          Encuentra el mejor precio, revisa fichas técnicas y dirígete directo al vendedor.
+        </p>
+        <form class="hero-search-box" action="pages/search.html" method="get">
+          <div class="hero-search-input-wrap">
+            <span class="material-icons hero-search-icon">search</span>
+            <input type="text" name="q" id="hero-main-input"
+                   placeholder="Ej: Cemento Melón 25kg, Taladro Bosch, Varilla 12mm…"
+                   autocomplete="off" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">Buscar precios</button>
+        </form>
+        <div class="hero-trending">
+          <span class="text-muted" style="font-size:0.875rem;">Tendencias:</span>
+          <a href="pages/search.html?q=cemento" class="category-chip">Cemento Portland</a>
+          <a href="pages/search.html?q=taladro" class="category-chip">Taladro percutor</a>
+          <a href="pages/search.html?q=varilla" class="category-chip">Varilla corrugada</a>
+          <a href="pages/search.html?q=pintura" class="category-chip">Pintura látex</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">5+</span>
+          <span class="hero-stat-label">Proveedores</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">10K+</span>
+          <span class="hero-stat-label">Productos</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">4</span>
+          <span class="hero-stat-label">Categorías</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CATEGORÍAS ══════════ -->
+  <section class="section-categories" id="categories">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="label">Explorar</span>
+          Categorías Principales
+        </div>
+        <a href="pages/categories.html" class="btn btn-secondary">
+          Ver catálogo completo
+          <span class="material-icons" style="font-size:16px;">arrow_forward</span>
+        </a>
+      </div>
+      <div class="categories-grid" id="categories-grid">
+
+        <a href="pages/search.html?cat=materiales-estructurales" class="category-card" id="cat-estructurales">
+          <div class="cat-code">CAT-01</div>
+          <div class="cat-icon">🏗️</div>
+          <h3 class="cat-name">Materiales Estructurales</h3>
+          <p class="cat-desc">Acero, cemento, áridos y elementos prefabricados para cimentación y obra gruesa.</p>
+          <span class="cat-link">Explorar <span class="material-icons">chevron_right</span></span>
+        </a>
+
+        <a href="pages/search.html?cat=herramientas-electricas" class="category-card" id="cat-herramientas">
+          <div class="cat-code">CAT-02</div>
+          <div class="cat-icon">⚡</div>
+          <h3 class="cat-name">Herramientas Eléctricas</h3>
+          <p class="cat-desc">Taladros, amoladoras, sierras y equipos de potencia de las principales marcas.</p>
+          <span class="cat-link">Explorar <span class="material-icons">chevron_right</span></span>
+        </a>
+
+        <a href="pages/search.html?cat=fijaciones-tornilleria" class="category-card" id="cat-fijaciones">
+          <div class="cat-code">CAT-03</div>
+          <div class="cat-icon">🔩</div>
+          <h3 class="cat-name">Fijaciones y Tornillería</h3>
+          <p class="cat-desc">Pernos, tornillos, tarugos, anclajes y sistemas de fijación para cada aplicación.</p>
+          <span class="cat-link">Explorar <span class="material-icons">chevron_right</span></span>
+        </a>
+
+        <a href="pages/search.html?cat=pinturas-revestimientos" class="category-card" id="cat-pinturas">
+          <div class="cat-code">CAT-04</div>
+          <div class="cat-icon">🎨</div>
+          <h3 class="cat-name">Pinturas y Revestimientos</h3>
+          <p class="cat-desc">Pintura látex, esmaltes, barnices, impermeabilizantes y productos de terminación.</p>
+          <span class="cat-link">Explorar <span class="material-icons">chevron_right</span></span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ OFERTAS DESTACADAS ══════════ -->
+  <section class="section-featured" id="featured">
+    <div class="container">
+      <div class="section-title">
+        <span class="label">Mejores precios hoy</span>
+        Ofertas Destacadas del Mercado
+      </div>
+      <div class="featured-grid" id="featured-products">
+
+        <div class="product-card" id="prod-hormigon">
+          <div class="product-card-header">
+            <span class="badge badge-success">↓ -8%</span>
+            <span class="badge badge-secondary">Estructurales</span>
+          </div>
+          <div class="product-thumb">🧱</div>
+          <h4 class="product-name">Bloque de Hormigón Estructural 20×20×40cm</h4>
+          <div class="product-providers">
+            <span class="text-muted" style="font-size:0.8rem">Disponible en 4 tiendas</span>
+          </div>
+          <div class="product-price-range">
+            <span class="price-main md price-best">$890</span>
+            <span class="price-sub">— $1.150</span>
+          </div>
+          <a href="pages/product.html?id=bloque-hormigon" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:var(--space-sm)">
+            Ver comparativa
+          </a>
+        </div>
+
+        <div class="product-card" id="prod-varilla">
+          <div class="product-card-header">
+            <span class="badge badge-secondary">Estructurales</span>
+          </div>
+          <div class="product-thumb">⚙️</div>
+          <h4 class="product-name">Varilla Corrugada Acero B500S 12mm × 6m</h4>
+          <div class="product-providers">
+            <span class="text-muted" style="font-size:0.8rem">Disponible en 5 tiendas</span>
+          </div>
+          <div class="product-price-range">
+            <span class="price-main md price-best">$4.200</span>
+            <span class="price-sub">— $5.800</span>
+          </div>
+          <a href="pages/product.html?id=varilla-12mm" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:var(--space-sm)">
+            Ver comparativa
+          </a>
+        </div>
+
+        <div class="product-card" id="prod-hormigonera">
+          <div class="product-card-header">
+            <span class="badge badge-info">Popular</span>
+            <span class="badge badge-secondary">Herramientas</span>
+          </div>
+          <div class="product-thumb">🔧</div>
+          <h4 class="product-name">Hormigonera Eléctrica Profesional 180L</h4>
+          <div class="product-providers">
+            <span class="text-muted" style="font-size:0.8rem">Disponible en 3 tiendas</span>
+          </div>
+          <div class="product-price-range">
+            <span class="price-main md price-best">$189.990</span>
+            <span class="price-sub">— $215.000</span>
+          </div>
+          <a href="pages/product.html?id=hormigonera-180l" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:var(--space-sm)">
+            Ver comparativa
+          </a>
+        </div>
+
+        <div class="product-card" id="prod-tablero">
+          <div class="product-card-header">
+            <span class="badge badge-success">↓ -5%</span>
+            <span class="badge badge-secondary">Materiales</span>
+          </div>
+          <div class="product-thumb">🪵</div>
+          <h4 class="product-name">Tablero Contrachapado Fenólico 18mm 250×122cm</h4>
+          <div class="product-providers">
+            <span class="text-muted" style="font-size:0.8rem">Disponible en 4 tiendas</span>
+          </div>
+          <div class="product-price-range">
+            <span class="price-main md price-best">$38.500</span>
+            <span class="price-sub">— $47.000</span>
+          </div>
+          <a href="pages/product.html?id=tablero-fenolico" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:var(--space-sm)">
+            Ver comparativa
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ ÍNDICE DE PRECIOS ══════════ -->
+  <section class="section-index" id="price-index">
+    <div class="container">
+      <div class="section-title">
+        <span class="label"><span class="material-icons" style="font-size:14px;vertical-align:middle">query_stats</span> Mercado en tiempo real</span>
+        Índice de Precios de Materiales Base
+      </div>
+      <div class="index-table-wrap">
+        <table class="table-compare" id="price-index-table">
+          <thead>
+            <tr>
+              <th>Material</th>
+              <th>Categoría</th>
+              <th>Precio Mín.</th>
+              <th>Precio Máx.</th>
+              <th>Variación</th>
+              <th>Tiendas</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-mono" style="font-weight:600">Cemento Melón Extra 25kg</td>
+              <td><span class="badge badge-secondary">Estructurales</span></td>
+              <td class="price-best font-mono">$7.990</td>
+              <td class="font-mono">$9.490</td>
+              <td><span style="color:#2e7d32">▼ -3.2%</span></td>
+              <td>5</td>
+              <td><a href="pages/product.html?id=cemento-melon" class="btn btn-sm btn-secondary">Comparar</a></td>
+            </tr>
+            <tr>
+              <td class="font-mono" style="font-weight:600">Arena Fina m³</td>
+              <td><span class="badge badge-secondary">Estructurales</span></td>
+              <td class="price-best font-mono">$32.000</td>
+              <td class="font-mono">$41.500</td>
+              <td><span style="color:var(--error)">▲ +1.5%</span></td>
+              <td>3</td>
+              <td><a href="pages/product.html?id=arena-fina" class="btn btn-sm btn-secondary">Comparar</a></td>
+            </tr>
+            <tr>
+              <td class="font-mono" style="font-weight:600">Ladrillo Fiscalino 14×6.5×29cm (c/u)</td>
+              <td><span class="badge badge-secondary">Estructurales</span></td>
+              <td class="price-best font-mono">$145</td>
+              <td class="font-mono">$195</td>
+              <td><span style="color:#2e7d32">▼ -1.0%</span></td>
+              <td>4</td>
+              <td><a href="pages/product.html?id=ladrillo-fiscalino" class="btn btn-sm btn-secondary">Comparar</a></td>
+            </tr>
+            <tr>
+              <td class="font-mono" style="font-weight:600">Taladro Percutor Bosch GSB 13 RE</td>
+              <td><span class="badge badge-info">Herramientas</span></td>
+              <td class="price-best font-mono">$54.990</td>
+              <td class="font-mono">$69.990</td>
+              <td><span style="color:#2e7d32">▼ -8.0%</span></td>
+              <td>5</td>
+              <td><a href="pages/product.html?id=bosch-gsb-13" class="btn btn-sm btn-secondary">Comparar</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CÓMO FUNCIONA ══════════ -->
+  <section class="section-how" id="how-it-works">
+    <div class="container">
+      <div class="section-title" style="text-align:center">
+        <span class="label">Simple y rápido</span>
+        ¿Cómo funciona ConstructCompare?
+      </div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-step-num">01</div>
+          <div class="how-step-icon">🔍</div>
+          <h4>Busca tu producto</h4>
+          <p>Ingresa el nombre, marca o SKU del material o herramienta que necesitas.</p>
+        </div>
+        <div class="how-step-arrow">→</div>
+        <div class="how-step">
+          <div class="how-step-num">02</div>
+          <div class="how-step-icon">📊</div>
+          <h4>Compara precios</h4>
+          <p>Ve todos los precios disponibles en múltiples tiendas en una sola ficha unificada.</p>
+        </div>
+        <div class="how-step-arrow">→</div>
+        <div class="how-step">
+          <div class="how-step-num">03</div>
+          <div class="how-step-icon">🛒</div>
+          <h4>Ve al proveedor</h4>
+          <p>Haz clic y serás redirigido al sitio oficial del vendedor para concretar tu compra.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer id="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h4 style="font-size:1.1rem;letter-spacing:-0.01em">Construct<span style="color:var(--primary-container)">Compare</span></h4>
+        <p style="font-size:0.875rem;margin-top:var(--space-sm);max-width:260px">
+          Motor de comparación de precios para el rubro de la construcción, ferretería y herramientas en Chile.
+        </p>
+      </div>
+      <div>
+        <h4>Navegar</h4>
+        <a href="index.html">Inicio</a>
+        <a href="pages/categories.html">Categorías</a>
+        <a href="pages/search.html">Buscar</a>
+        <a href="pages/compare.html">Comparar</a>
+      </div>
+      <div>
+        <h4>Proveedores</h4>
+        <a href="#">Easy</a>
+        <a href="#">HomeDepot</a>
+        <a href="#">Sodimac</a>
+        <a href="#">Construmart</a>
+        <a href="#">Imperial</a>
+      </div>
+      <div>
+        <h4>Sistema</h4>
+        <a href="admin/dashboard.html">Panel Admin</a>
+        <a href="#">API</a>
+        <a href="#">Aviso Legal</a>
+        <a href="#">Privacidad</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 ConstructCompare — Proyecto académico. No somos un e-commerce, somos un comparador informativo.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/home.js"></script>
+</body>
+</html>

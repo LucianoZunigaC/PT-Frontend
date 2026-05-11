@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categorías — ConstructCompare</title>
+  <meta name="description" content="Explora todas las categorías de materiales de construcción, herramientas eléctricas, fijaciones y pinturas. Compara precios entre múltiples proveedores." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/categories.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="main-navbar">
+    <div class="navbar-inner">
+      <a href="../index.html" class="navbar-brand">Construct<span>Compare</span></a>
+      <form class="navbar-search" action="search.html" method="get">
+        <input type="text" name="q" id="search-input" placeholder="Buscar materiales, herramientas…" autocomplete="off" />
+        <button type="submit" class="btn-search">
+          <span class="material-icons" style="font-size:18px">search</span>
+          Buscar
+        </button>
+      </form>
+      <nav class="navbar-links">
+        <a href="categories.html" class="active">Categorías</a>
+        <a href="compare.html">Comparar</a>
+        <a href="../admin/dashboard.html">Admin</a>
+      </nav>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="cat-page-header" id="cat-page-header">
+    <div class="container">
+      <div class="cat-header-content">
+        <span class="label">Todo el catálogo</span>
+        <h1 class="cat-header-title">Categorías de Productos</h1>
+        <p class="cat-header-sub">
+          Navega por categoría para encontrar materiales de construcción, herramientas, fijaciones y acabados.
+          Precios actualizados desde <strong>5 proveedores</strong>.
+        </p>
+      </div>
+      <!-- Stats rápidas -->
+      <div class="cat-header-stats">
+        <div class="cat-stat"><span class="font-mono" style="font-size:1.5rem;font-weight:700;color:var(--primary-container)">10.482</span><span>Productos</span></div>
+        <div class="cat-stat"><span class="font-mono" style="font-size:1.5rem;font-weight:700;color:var(--primary-container)">5</span><span>Proveedores</span></div>
+        <div class="cat-stat"><span class="font-mono" style="font-size:1.5rem;font-weight:700;color:var(--primary-container)">4</span><span>Categorías</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="container cat-main" id="cat-main">
+
+    <!-- Filtro rápido de categorías -->
+    <div class="cat-filter-bar" id="cat-filter-bar">
+      <button class="category-chip active" data-cat="all" id="filter-all">Todas</button>
+      <button class="category-chip" data-cat="estructurales" id="filter-estructurales">Materiales Estructurales</button>
+      <button class="category-chip" data-cat="herramientas" id="filter-herramientas">Herramientas Eléctricas</button>
+      <button class="category-chip" data-cat="fijaciones" id="filter-fijaciones">Fijaciones y Tornillería</button>
+      <button class="category-chip" data-cat="pinturas" id="filter-pinturas">Pinturas y Revestimientos</button>
+    </div>
+
+    <!-- ═══ CAT 01 — MATERIALES ESTRUCTURALES ═══ -->
+    <section class="cat-section" id="cat-estructurales" data-cat="estructurales">
+      <div class="cat-section-header">
+        <div class="cat-section-icon">🏗️</div>
+        <div>
+          <div class="cat-section-code text-muted font-mono">CAT-01</div>
+          <h2 class="cat-section-name">Materiales Estructurales</h2>
+          <p class="cat-section-desc">Cemento, áridos, acero, ladrillos y elementos prefabricados para cimentación y obra gruesa.</p>
+        </div>
+        <a href="search.html?cat=materiales-estructurales" class="btn btn-secondary ml-auto" id="see-all-estructurales">
+          Ver todos <span class="material-icons" style="font-size:16px">arrow_forward</span>
+        </a>
+      </div>
+      <div class="subcat-grid">
+
+        <a href="search.html?cat=materiales-estructurales&sub=cemento" class="subcat-card" id="subcat-cemento">
+          <div class="subcat-thumb">🏺</div>
+          <h3 class="subcat-name">Cemento y Morteros</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">42 productos</span>
+            <span class="subcat-price">Desde $7.990</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">5 tiendas</span>
+          </div>
+        </a>
+
+        <a href="search.html?cat=materiales-estructurales&sub=acero" class="subcat-card" id="subcat-acero">
+          <div class="subcat-thumb">🔗</div>
+          <h3 class="subcat-name">Acero y Varillas</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">38 productos</span>
+            <span class="subcat-price">Desde $2.100</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">4 tiendas</span>
+          </div>
+        </a>
+
+        <a href="search.html?cat=materiales-estructurales&sub=ladrillos" class="subcat-card" id="subcat-ladrillos">
+          <div class="subcat-thumb">🧱</div>
+          <h3 class="subcat-name">Ladrillos y Bloques</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">29 productos</span>
+            <span class="subcat-price">Desde $145</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">4 tiendas</span>
+          </div>
+        </a>
+
+        <a href="search.html?cat=materiales-estructurales&sub=aridos" class="subcat-card" id="subcat-aridos">
+          <div class="subcat-thumb">⛏️</div>
+          <h3 class="subcat-name">Áridos y Gravas</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">15 productos</span>
+            <span class="subcat-price">Desde $28.000/m³</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">3 tiendas</span>
+          </div>
+        </a>
+
+        <a href="search.html?cat=materiales-estructurales&sub=tableros" class="subcat-card" id="subcat-tableros">
+          <div class="subcat-thumb">🪵</div>
+          <h3 class="subcat-name">Tableros y Maderas</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">54 productos</span>
+            <span class="subcat-price">Desde $12.500</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">5 tiendas</span>
+          </div>
+        </a>
+
+        <a href="search.html?cat=materiales-estructurales&sub=prefabricados" class="subcat-card" id="subcat-prefab">
+          <div class="subcat-thumb">🏛️</div>
+          <h3 class="subcat-name">Prefabricados</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">23 productos</span>
+            <span class="subcat-price">Desde $1.800</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">3 tiendas</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ═══ CAT 02 — HERRAMIENTAS ELÉCTRICAS ═══ -->
+    <section class="cat-section" id="cat-herramientas" data-cat="herramientas">
+      <div class="cat-section-header">
+        <div class="cat-section-icon">⚡</div>
+        <div>
+          <div class="cat-section-code text-muted font-mono">CAT-02</div>
+          <h2 class="cat-section-name">Herramientas Eléctricas</h2>
+          <p class="cat-section-desc">Taladros, amoladoras, sierras, lijadoras y equipos de potencia de marcas líderes.</p>
+        </div>
+        <a href="search.html?cat=herramientas-electricas" class="btn btn-secondary ml-auto" id="see-all-herramientas">
+          Ver todos <span class="material-icons" style="font-size:16px">arrow_forward</span>
+        </a>
+      </div>
+      <div class="subcat-grid">
+
+        <a href="search.html?cat=herramientas-electricas&sub=taladros" class="subcat-card" id="subcat-taladros">
+          <div class="subcat-thumb">🔧</div>
+          <h3 class="subcat-name">Taladros y Percutores</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">164 productos</span>
+            <span class="subcat-price">Desde $24.990</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">5 tiendas</span>
+          </div>
+        </a>
+
+        <a href="search.html?cat=herramientas-electricas&sub=amoladoras" class="subcat-card" id="subcat-amoladoras">
+          <div class="subcat-thumb">💿</div>
+          <h3 class="subcat-name">Amoladoras</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">87 productos</span>
+            <span class="subcat-price">Desde $34.990</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">5 tiendas</span>
+          </div>
+        </a>
+
+        <a href="search.html?cat=herramientas-electricas&sub=sierras" class="subcat-card" id="subcat-sierras">
+          <div class="subcat-thumb">🪚</div>
+          <h3 class="subcat-name">Sierras y Caladores</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">93 productos</span>
+            <span class="subcat-price">Desde $49.990</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">4 tiendas</span>
+          </div>
+        </a>
+
+        <a href="search.html?cat=herramientas-electricas&sub=hormigoneras" class="subcat-card" id="subcat-hormigoneras">
+          <div class="subcat-thumb">🏗️</div>
+          <h3 class="subcat-name">Hormigoneras</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">31 productos</span>
+            <span class="subcat-price">Desde $119.990</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">3 tiendas</span>
+          </div>
+        </a>
+
+        <a href="search.html?cat=herramientas-electricas&sub=lijadoras" class="subcat-card" id="subcat-lijadoras">
+          <div class="subcat-thumb">🔲</div>
+          <h3 class="subcat-name">Lijadoras y Pulidoras</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">52 productos</span>
+            <span class="subcat-price">Desde $29.990</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">4 tiendas</span>
+          </div>
+        </a>
+
+        <a href="search.html?cat=herramientas-electricas&sub=compresores" class="subcat-card" id="subcat-compresores">
+          <div class="subcat-thumb">💨</div>
+          <h3 class="subcat-name">Compresores</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">26 productos</span>
+            <span class="subcat-price">Desde $89.990</span>
+          </div>
+          <div class="subcat-providers">
+            <span class="badge badge-secondary">3 tiendas</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ═══ CAT 03 — FIJACIONES Y TORNILLERÍA ═══ -->
+    <section class="cat-section" id="cat-fijaciones" data-cat="fijaciones">
+      <div class="cat-section-header">
+        <div class="cat-section-icon">🔩</div>
+        <div>
+          <div class="cat-section-code text-muted font-mono">CAT-03</div>
+          <h2 class="cat-section-name">Fijaciones y Tornillería</h2>
+          <p class="cat-section-desc">Tornillos, pernos, tarugos, anclajes químicos y sistemas de fijación para toda aplicación.</p>
+        </div>
+        <a href="search.html?cat=fijaciones-tornilleria" class="btn btn-secondary ml-auto" id="see-all-fijaciones">
+          Ver todos <span class="material-icons" style="font-size:16px">arrow_forward</span>
+        </a>
+      </div>
+      <div class="subcat-grid">
+
+        <a href="search.html?cat=fijaciones-tornilleria&sub=tornillos" class="subcat-card" id="subcat-tornillos">
+          <div class="subcat-thumb">🔩</div>
+          <h3 class="subcat-name">Tornillos y Pernos</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">312 productos</span>
+            <span class="subcat-price">Desde $8</span>
+          </div>
+          <div class="subcat-providers"><span class="badge badge-secondary">5 tiendas</span></div>
+        </a>
+
+        <a href="search.html?cat=fijaciones-tornilleria&sub=tarugos" class="subcat-card" id="subcat-tarugos">
+          <div class="subcat-thumb">📌</div>
+          <h3 class="subcat-name">Tarugos y Anclajes</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">148 productos</span>
+            <span class="subcat-price">Desde $12</span>
+          </div>
+          <div class="subcat-providers"><span class="badge badge-secondary">4 tiendas</span></div>
+        </a>
+
+        <a href="search.html?cat=fijaciones-tornilleria&sub=cadenas" class="subcat-card" id="subcat-cadenas">
+          <div class="subcat-thumb">⛓️</div>
+          <h3 class="subcat-name">Cadenas y Cables</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">67 productos</span>
+            <span class="subcat-price">Desde $1.200/m</span>
+          </div>
+          <div class="subcat-providers"><span class="badge badge-secondary">3 tiendas</span></div>
+        </a>
+
+        <a href="search.html?cat=fijaciones-tornilleria&sub=adhesivos" class="subcat-card" id="subcat-adhesivos">
+          <div class="subcat-thumb">🫙</div>
+          <h3 class="subcat-name">Adhesivos y Químicos</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">89 productos</span>
+            <span class="subcat-price">Desde $3.490</span>
+          </div>
+          <div class="subcat-providers"><span class="badge badge-secondary">5 tiendas</span></div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ═══ CAT 04 — PINTURAS Y REVESTIMIENTOS ═══ -->
+    <section class="cat-section" id="cat-pinturas" data-cat="pinturas">
+      <div class="cat-section-header">
+        <div class="cat-section-icon">🎨</div>
+        <div>
+          <div class="cat-section-code text-muted font-mono">CAT-04</div>
+          <h2 class="cat-section-name">Pinturas y Revestimientos</h2>
+          <p class="cat-section-desc">Pintura látex, esmaltes, barnices, impermeabilizantes y sistemas de terminación.</p>
+        </div>
+        <a href="search.html?cat=pinturas-revestimientos" class="btn btn-secondary ml-auto" id="see-all-pinturas">
+          Ver todos <span class="material-icons" style="font-size:16px">arrow_forward</span>
+        </a>
+      </div>
+      <div class="subcat-grid">
+
+        <a href="search.html?cat=pinturas-revestimientos&sub=latex" class="subcat-card" id="subcat-latex">
+          <div class="subcat-thumb">🎨</div>
+          <h3 class="subcat-name">Pintura Látex</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">203 productos</span>
+            <span class="subcat-price">Desde $14.990</span>
+          </div>
+          <div class="subcat-providers"><span class="badge badge-secondary">5 tiendas</span></div>
+        </a>
+
+        <a href="search.html?cat=pinturas-revestimientos&sub=esmaltes" class="subcat-card" id="subcat-esmaltes">
+          <div class="subcat-thumb">🪣</div>
+          <h3 class="subcat-name">Esmaltes y Anticorrosivos</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">118 productos</span>
+            <span class="subcat-price">Desde $9.990</span>
+          </div>
+          <div class="subcat-providers"><span class="badge badge-secondary">4 tiendas</span></div>
+        </a>
+
+        <a href="search.html?cat=pinturas-revestimientos&sub=impermeabilizantes" class="subcat-card" id="subcat-impermeabilizantes">
+          <div class="subcat-thumb">💧</div>
+          <h3 class="subcat-name">Impermeabilizantes</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">56 productos</span>
+            <span class="subcat-price">Desde $19.990</span>
+          </div>
+          <div class="subcat-providers"><span class="badge badge-secondary">4 tiendas</span></div>
+        </a>
+
+        <a href="search.html?cat=pinturas-revestimientos&sub=barnices" class="subcat-card" id="subcat-barnices">
+          <div class="subcat-thumb">🪵</div>
+          <h3 class="subcat-name">Barnices y Selladores</h3>
+          <div class="subcat-meta">
+            <span class="subcat-count">74 productos</span>
+            <span class="subcat-price">Desde $7.990</span>
+          </div>
+          <div class="subcat-providers"><span class="badge badge-secondary">3 tiendas</span></div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h4 style="font-size:1.1rem;letter-spacing:-0.01em">Construct<span style="color:var(--primary-container)">Compare</span></h4>
+        <p style="font-size:0.875rem;margin-top:var(--space-sm);max-width:260px">Motor de comparación de precios para construcción y ferretería en Chile.</p>
+      </div>
+      <div>
+        <h4>Navegar</h4>
+        <a href="../index.html">Inicio</a>
+        <a href="categories.html">Categorías</a>
+        <a href="search.html">Buscar</a>
+        <a href="compare.html">Comparar</a>
+      </div>
+      <div>
+        <h4>Proveedores</h4>
+        <a href="#">Easy</a><a href="#">HomeDepot</a>
+        <a href="#">Sodimac</a><a href="#">Construmart</a><a href="#">Imperial</a>
+      </div>
+      <div>
+        <h4>Sistema</h4>
+        <a href="../admin/dashboard.html">Panel Admin</a>
+        <a href="#">Aviso Legal</a><a href="#">Privacidad</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 ConstructCompare — Comparador informativo. No somos un e-commerce.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/categories.js"></script>
+</body>
+</html>

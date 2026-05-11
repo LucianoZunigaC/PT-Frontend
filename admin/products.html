@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Productos — Admin ConstructCompare</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body class="admin-body" id="admin-products-page">
+
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo"><span class="logo-icon">⚙️</span><div><div class="logo-name">ConstructCompare</div><div class="logo-badge">Panel Admin</div></div></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link"><span class="material-icons">dashboard</span>Dashboard</a>
+      <a href="sources.html" class="sidebar-link"><span class="material-icons">cloud_download</span>Fuentes de Datos</a>
+      <a href="scraping.html" class="sidebar-link"><span class="material-icons">sync</span>Ejecución Scraping</a>
+      <a href="products.html" class="sidebar-link active"><span class="material-icons">inventory_2</span>Productos</a>
+      <a href="matching.html" class="sidebar-link"><span class="material-icons">merge_type</span>Matching / Normalización</a>
+      <a href="categories-admin.html" class="sidebar-link"><span class="material-icons">category</span>Categorías</a>
+      <a href="errors.html" class="sidebar-link"><span class="material-icons">bug_report</span>Errores de Extracción<span class="sidebar-badge">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="../index.html" class="sidebar-link"><span class="material-icons">open_in_new</span>Ver sitio público</a>
+    </nav>
+    <div class="sidebar-user"><span class="material-icons">account_circle</span><div><div style="font-weight:600;font-size:0.875rem">Admin</div><div style="font-size:0.75rem;color:#78909c">admin@constructcompare.cl</div></div></div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="topbar-title">
+        <h1>Gestión de Productos</h1>
+        <span class="text-muted" style="font-size:0.875rem">10.482 productos indexados en el catálogo</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary" id="export-products-btn"><span class="material-icons">download</span>Exportar CSV</button>
+      </div>
+    </header>
+
+    <!-- Buscador y filtros -->
+    <div class="admin-panel" id="panel-product-filters" style="margin-bottom:var(--space-md)">
+      <div style="display:flex;gap:var(--space-sm);align-items:center;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px;position:relative">
+          <span class="material-icons" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--on-surface-variant)">search</span>
+          <input type="text" id="product-search-input" placeholder="Buscar por nombre, SKU o marca…"
+            style="width:100%;padding:8px 8px 8px 38px;border:1px solid var(--outline-variant);border-radius:var(--radius);font-family:var(--font-family);font-size:0.875rem;outline:none" />
+        </div>
+        <select id="filter-cat-products" style="padding:8px 12px;border:1px solid var(--outline-variant);border-radius:var(--radius);font-family:var(--font-family);font-size:0.875rem;background:var(--surface-container-lowest);outline:none">
+          <option value="">Todas las categorías</option>
+          <option value="estructurales">Materiales Estructurales</option>
+          <option value="herramientas">Herramientas Eléctricas</option>
+          <option value="fijaciones">Fijaciones y Tornillería</option>
+          <option value="pinturas">Pinturas y Revestimientos</option>
+        </select>
+        <select id="filter-provider-products" style="padding:8px 12px;border:1px solid var(--outline-variant);border-radius:var(--radius);font-family:var(--font-family);font-size:0.875rem;background:var(--surface-container-lowest);outline:none">
+          <option value="">Todos los proveedores</option>
+          <option value="sodimac">Sodimac</option>
+          <option value="easy">Easy</option>
+          <option value="construmart">Construmart</option>
+          <option value="homedepot">HomeDepot</option>
+          <option value="imperial">Imperial</option>
+        </select>
+        <select id="filter-status-products" style="padding:8px 12px;border:1px solid var(--outline-variant);border-radius:var(--radius);font-family:var(--font-family);font-size:0.875rem;background:var(--surface-container-lowest);outline:none">
+          <option value="">Todos los estados</option>
+          <option value="active">Activo</option>
+          <option value="hidden">Oculto</option>
+          <option value="review">Requiere revisión</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tabla de productos -->
+    <div class="admin-panel" id="panel-products-table">
+      <div class="panel-header">
+        <h2 class="panel-title">Productos indexados</h2>
+        <span class="text-muted" style="font-size:0.875rem">Mostrando 1–10 de 10.482</span>
+      </div>
+      <table class="table-compare admin-table" id="products-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="select-all-products" title="Seleccionar todos" /></th>
+            <th>Nombre normalizado</th>
+            <th>SKU interno</th>
+            <th>Categoría</th>
+            <th>Proveedores</th>
+            <th>Precio mín.</th>
+            <th>Precio máx.</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="products-tbody">
+          <tr id="prod-row-1">
+            <td><input type="checkbox" /></td>
+            <td style="font-weight:600">Taladro Percutor Bosch GSB 13 RE 650W</td>
+            <td class="font-mono" style="font-size:0.75rem">CC-HE-001</td>
+            <td><span class="badge badge-info">Herramientas</span></td>
+            <td class="font-mono">5</td>
+            <td class="price-best font-mono">$54.990</td>
+            <td class="font-mono">$69.990</td>
+            <td><span class="badge badge-success">Activo</span></td>
+            <td class="table-actions">
+              <a href="../pages/product.html?id=bosch-gsb-13" class="btn btn-ghost btn-sm" title="Ver público" target="_blank"><span class="material-icons">visibility</span></a>
+              <button class="btn btn-ghost btn-sm" title="Editar"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm" title="Ocultar"><span class="material-icons">visibility_off</span></button>
+            </td>
+          </tr>
+          <tr id="prod-row-2">
+            <td><input type="checkbox" /></td>
+            <td style="font-weight:600">Taladro Percutor Inalámbrico DeWalt DCD796D2 20V</td>
+            <td class="font-mono" style="font-size:0.75rem">CC-HE-002</td>
+            <td><span class="badge badge-info">Herramientas</span></td>
+            <td class="font-mono">5</td>
+            <td class="price-best font-mono">$189.990</td>
+            <td class="font-mono">$249.990</td>
+            <td><span class="badge badge-success">Activo</span></td>
+            <td class="table-actions">
+              <a href="../pages/product.html?id=dewalt-dcd796" class="btn btn-ghost btn-sm" target="_blank"><span class="material-icons">visibility</span></a>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">visibility_off</span></button>
+            </td>
+          </tr>
+          <tr id="prod-row-3">
+            <td><input type="checkbox" /></td>
+            <td style="font-weight:600">Cemento Melón Extra 25kg</td>
+            <td class="font-mono" style="font-size:0.75rem">CC-ME-001</td>
+            <td><span class="badge badge-secondary">Estructurales</span></td>
+            <td class="font-mono">5</td>
+            <td class="price-best font-mono">$7.990</td>
+            <td class="font-mono">$9.490</td>
+            <td><span class="badge badge-success">Activo</span></td>
+            <td class="table-actions">
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">visibility</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">visibility_off</span></button>
+            </td>
+          </tr>
+          <tr id="prod-row-4">
+            <td><input type="checkbox" /></td>
+            <td style="font-weight:600">Varilla Corrugada Acero B500S 12mm × 6m</td>
+            <td class="font-mono" style="font-size:0.75rem">CC-ME-002</td>
+            <td><span class="badge badge-secondary">Estructurales</span></td>
+            <td class="font-mono">4</td>
+            <td class="price-best font-mono">$4.200</td>
+            <td class="font-mono">$5.800</td>
+            <td><span class="badge badge-success">Activo</span></td>
+            <td class="table-actions">
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">visibility</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">visibility_off</span></button>
+            </td>
+          </tr>
+          <tr id="prod-row-5">
+            <td><input type="checkbox" /></td>
+            <td style="font-weight:600;color:var(--error)">⚠ Taladro GSB Bosch kit profesional <em style="font-weight:400;font-style:italic">(posible duplicado)</em></td>
+            <td class="font-mono" style="font-size:0.75rem">CC-HE-001B</td>
+            <td><span class="badge badge-info">Herramientas</span></td>
+            <td class="font-mono">2</td>
+            <td class="price-best font-mono">$62.990</td>
+            <td class="font-mono">$72.990</td>
+            <td><span class="badge" style="background:#ffdad6;color:var(--error)">Revisión</span></td>
+            <td class="table-actions">
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">merge_type</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">delete</span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Paginación -->
+      <div style="display:flex;justify-content:center;gap:4px;padding:var(--space-md);border-top:1px solid var(--surface-container-high)">
+        <button class="page-btn" disabled><span class="material-icons">chevron_left</span></button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span style="padding:0 8px;line-height:36px;color:var(--on-surface-variant)">…</span>
+        <button class="page-btn">1.049</button>
+        <button class="page-btn"><span class="material-icons">chevron_right</span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    document.getElementById('select-all-products')?.addEventListener('change', function() {
+      document.querySelectorAll('#products-tbody input[type="checkbox"]').forEach(cb => cb.checked = this.checked);
+    });
+    document.getElementById('product-search-input')?.addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      document.querySelectorAll('#products-tbody tr').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+    document.getElementById('export-products-btn')?.addEventListener('click', () => alert('Exportando CSV… (conectar con backend)'));
+    // page-btn style
+    const style = document.createElement('style');
+    style.textContent = `.page-btn{min-width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--outline-variant);border-radius:var(--radius);background:var(--surface-container-lowest);color:var(--on-surface);font-size:0.875rem;font-weight:500;cursor:pointer;transition:all 150ms ease}.page-btn:hover:not(:disabled){border-color:var(--primary-container);color:var(--primary-container)}.page-btn.active{background:var(--primary-container);color:var(--on-primary);border-color:var(--primary-container)}.page-btn:disabled{opacity:.4;cursor:not-allowed}`;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

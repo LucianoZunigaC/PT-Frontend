@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página no encontrada — ConstructCompare</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="assets/css/variables.css" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body style="min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1f22 0%,#263238 100%)">
+
+  <nav class="navbar" id="main-navbar" style="background:transparent;border-bottom:1px solid rgba(255,255,255,0.08)">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">Construct<span>Compare</span></a>
+    </div>
+  </nav>
+
+  <main style="flex:1;display:flex;align-items:center;justify-content:center;padding:var(--space-xl)">
+    <div style="text-align:center;max-width:520px">
+      <div class="error-404-code" id="error-404-code">404</div>
+      <h1 style="color:#eceff1;font-size:1.75rem;font-weight:700;margin-bottom:var(--space-sm)">Página no encontrada</h1>
+      <p style="color:#90a4ae;font-size:1rem;line-height:1.7;margin-bottom:var(--space-xl)">
+        La URL que buscas no existe o fue movida.<br />
+        Puedes volver al inicio o buscar el producto que necesitas.
+      </p>
+      <div style="display:flex;gap:var(--space-sm);justify-content:center;flex-wrap:wrap">
+        <a href="index.html" class="btn btn-primary btn-lg">
+          <span class="material-icons">home</span>
+          Volver al inicio
+        </a>
+        <a href="pages/search.html" class="btn btn-secondary btn-lg">
+          <span class="material-icons">search</span>
+          Buscar productos
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <style>
+    .error-404-code{
+      font-size:clamp(6rem,18vw,9rem);font-weight:800;
+      font-family:var(--font-mono,monospace);
+      background:linear-gradient(135deg,var(--primary-container),#ff8f00);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;line-height:1;margin-bottom:var(--space-md);
+    }
+  </style>
+</body>
+</html>

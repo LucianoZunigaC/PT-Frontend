@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuentes de Datos — Admin ConstructCompare</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body class="admin-body" id="admin-sources-page">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">⚙️</span>
+      <div><div class="logo-name">ConstructCompare</div><div class="logo-badge">Panel Admin</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link" id="nav-dashboard"><span class="material-icons">dashboard</span>Dashboard</a>
+      <a href="sources.html" class="sidebar-link active" id="nav-sources"><span class="material-icons">cloud_download</span>Fuentes de Datos</a>
+      <a href="scraping.html" class="sidebar-link" id="nav-scraping"><span class="material-icons">sync</span>Ejecución Scraping</a>
+      <a href="products.html" class="sidebar-link" id="nav-products"><span class="material-icons">inventory_2</span>Productos</a>
+      <a href="matching.html" class="sidebar-link" id="nav-matching"><span class="material-icons">merge_type</span>Matching / Normalización</a>
+      <a href="categories-admin.html" class="sidebar-link" id="nav-categories"><span class="material-icons">category</span>Categorías</a>
+      <a href="errors.html" class="sidebar-link" id="nav-errors"><span class="material-icons">bug_report</span>Errores de Extracción<span class="sidebar-badge">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="../index.html" class="sidebar-link"><span class="material-icons">open_in_new</span>Ver sitio público</a>
+    </nav>
+    <div class="sidebar-user">
+      <span class="material-icons">account_circle</span>
+      <div><div style="font-weight:600;font-size:0.875rem">Admin</div><div style="font-size:0.75rem;color:#78909c">admin@constructcompare.cl</div></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+
+    <header class="admin-topbar">
+      <div class="topbar-title">
+        <h1>Fuentes de Datos</h1>
+        <span class="text-muted" style="font-size:0.875rem">Gestiona los sitios web desde los que se extrae información</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" id="add-source-btn">
+          <span class="material-icons">add</span>
+          Nueva Fuente
+        </button>
+      </div>
+    </header>
+
+    <!-- KPIs rápidos -->
+    <div class="kpi-grid" id="sources-kpis">
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(46,125,50,0.1);color:#2e7d32"><span class="material-icons">check_circle</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono">4</div><div class="kpi-label">Fuentes activas</div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(186,26,26,0.1);color:var(--error)"><span class="material-icons">error</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono">1</div><div class="kpi-label">Con errores</div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(245,124,0,0.12);color:var(--primary-container)"><span class="material-icons">schedule</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono">Cada 6h</div><div class="kpi-label">Frecuencia scraping</div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(72,98,110,0.12);color:var(--tertiary)"><span class="material-icons">inventory_2</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono">10.482</div><div class="kpi-label">Productos indexados</div></div>
+      </div>
+    </div>
+
+    <!-- Tabla de fuentes -->
+    <div class="admin-panel" id="panel-sources-table">
+      <div class="panel-header">
+        <h2 class="panel-title">Todas las fuentes</h2>
+        <div style="display:flex;gap:var(--space-sm)">
+          <select class="sort-select" id="filter-status" style="font-size:0.8rem">
+            <option value="all">Todos los estados</option>
+            <option value="active">Activo</option>
+            <option value="error">Error</option>
+            <option value="paused">Pausado</option>
+          </select>
+        </div>
+      </div>
+
+      <table class="table-compare admin-table" id="sources-table">
+        <thead>
+          <tr>
+            <th>Proveedor</th>
+            <th>URL Base</th>
+            <th>Categorías</th>
+            <th>Estado</th>
+            <th>Última ejecución</th>
+            <th>Próxima ejecución</th>
+            <th>Productos</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="sources-tbody">
+          <tr id="source-sodimac">
+            <td><strong>🏪 Sodimac</strong></td>
+            <td class="font-mono" style="font-size:0.75rem">sodimac.cl/construccion</td>
+            <td><span class="badge badge-secondary">4</span></td>
+            <td><span class="status-dot active"></span><span class="badge badge-success">Activo</span></td>
+            <td class="font-mono" style="font-size:0.8rem">Hoy 09:00</td>
+            <td class="font-mono" style="font-size:0.8rem">Hoy 15:00</td>
+            <td class="font-mono">3.241</td>
+            <td class="table-actions">
+              <button class="btn btn-ghost btn-sm" title="Ejecutar ahora"><span class="material-icons">play_arrow</span></button>
+              <button class="btn btn-ghost btn-sm" title="Editar"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm" title="Ver log"><span class="material-icons">receipt_long</span></button>
+              <button class="btn btn-ghost btn-sm" title="Pausar"><span class="material-icons">pause</span></button>
+            </td>
+          </tr>
+          <tr id="source-easy">
+            <td><strong>🏬 Easy</strong></td>
+            <td class="font-mono" style="font-size:0.75rem">easy.cl/herramientas</td>
+            <td><span class="badge badge-secondary">3</span></td>
+            <td><span class="status-dot active"></span><span class="badge badge-success">Activo</span></td>
+            <td class="font-mono" style="font-size:0.8rem">Hoy 08:55</td>
+            <td class="font-mono" style="font-size:0.8rem">Hoy 14:55</td>
+            <td class="font-mono">2.890</td>
+            <td class="table-actions">
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">play_arrow</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">receipt_long</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">pause</span></button>
+            </td>
+          </tr>
+          <tr id="source-construmart">
+            <td><strong>🏗️ Construmart</strong></td>
+            <td class="font-mono" style="font-size:0.75rem">construmart.cl/catalogo</td>
+            <td><span class="badge badge-secondary">4</span></td>
+            <td><span class="status-dot active"></span><span class="badge badge-success">Activo</span></td>
+            <td class="font-mono" style="font-size:0.8rem">Hoy 07:30</td>
+            <td class="font-mono" style="font-size:0.8rem">Hoy 13:30</td>
+            <td class="font-mono">1.987</td>
+            <td class="table-actions">
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">play_arrow</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">receipt_long</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">pause</span></button>
+            </td>
+          </tr>
+          <tr id="source-homedepot">
+            <td><strong>🏠 HomeDepot</strong></td>
+            <td class="font-mono" style="font-size:0.75rem">homedepot.cl</td>
+            <td><span class="badge badge-secondary">2</span></td>
+            <td><span class="status-dot error"></span><span class="badge" style="background:#ffdad6;color:var(--error)">Error</span></td>
+            <td class="font-mono" style="font-size:0.8rem;color:var(--error)">Ayer 18:00</td>
+            <td class="font-mono" style="font-size:0.8rem">Pendiente</td>
+            <td class="font-mono">1.244</td>
+            <td class="table-actions">
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">play_arrow</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">bug_report</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">pause</span></button>
+            </td>
+          </tr>
+          <tr id="source-imperial">
+            <td><strong>⚙️ Imperial</strong></td>
+            <td class="font-mono" style="font-size:0.75rem">imperial.cl/ferreteria</td>
+            <td><span class="badge badge-secondary">4</span></td>
+            <td><span class="status-dot active"></span><span class="badge badge-success">Activo</span></td>
+            <td class="font-mono" style="font-size:0.8rem">Hoy 10:02</td>
+            <td class="font-mono" style="font-size:0.8rem">Hoy 16:02</td>
+            <td class="font-mono">1.120</td>
+            <td class="table-actions">
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">play_arrow</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">receipt_long</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">pause</span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal nueva fuente (simplificado) -->
+    <div class="sources-modal hidden" id="add-source-modal">
+      <div class="sources-modal-card" id="add-source-card">
+        <div class="panel-header">
+          <h2 class="panel-title">Nueva Fuente de Datos</h2>
+          <button class="btn btn-ghost btn-sm" id="close-modal-btn"><span class="material-icons">close</span></button>
+        </div>
+        <form class="source-form" id="source-form">
+          <div class="form-row">
+            <label for="sf-name">Nombre del proveedor</label>
+            <input type="text" id="sf-name" placeholder="Ej: Falabella Home" />
+          </div>
+          <div class="form-row">
+            <label for="sf-url">URL base del catálogo</label>
+            <input type="text" id="sf-url" placeholder="https://www.proveedor.cl/construccion" />
+          </div>
+          <div class="form-row">
+            <label for="sf-freq">Frecuencia de actualización</label>
+            <select id="sf-freq">
+              <option value="6h">Cada 6 horas</option>
+              <option value="12h">Cada 12 horas</option>
+              <option value="24h">Una vez al día</option>
+              <option value="manual">Manual</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Categorías a extraer</label>
+            <div class="form-checkboxes">
+              <label><input type="checkbox" value="estructurales" /> Materiales Estructurales</label>
+              <label><input type="checkbox" value="herramientas" /> Herramientas Eléctricas</label>
+              <label><input type="checkbox" value="fijaciones" /> Fijaciones y Tornillería</label>
+              <label><input type="checkbox" value="pinturas" /> Pinturas y Revestimientos</label>
+            </div>
+          </div>
+          <div style="display:flex;gap:var(--space-sm);justify-content:flex-end;margin-top:var(--space-lg)">
+            <button type="button" class="btn btn-secondary" id="cancel-modal-btn">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar fuente</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div><!-- /admin-main -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/admin.js"></script>
+  <script>
+    // Modal
+    document.getElementById('add-source-btn')?.addEventListener('click', () =>
+      document.getElementById('add-source-modal')?.classList.remove('hidden'));
+    ['close-modal-btn','cancel-modal-btn'].forEach(id =>
+      document.getElementById(id)?.addEventListener('click', () =>
+        document.getElementById('add-source-modal')?.classList.add('hidden')));
+    document.getElementById('source-form')?.addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Fuente guardada (conectar con backend).');
+      document.getElementById('add-source-modal')?.classList.add('hidden');
+    });
+  </script>
+  <style>
+    .sort-select { padding:6px 12px; border:1px solid var(--outline-variant); border-radius:var(--radius); font-family:var(--font-family); background:var(--surface-container-lowest); color:var(--on-surface); outline:none; }
+    .sources-modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:2000; }
+    .sources-modal.hidden { display:none; }
+    .sources-modal-card { background:var(--surface-container-lowest); border-radius:var(--radius-lg); padding:var(--space-xl); width:100%; max-width:520px; box-shadow:var(--shadow-modal); }
+    .source-form { display:flex; flex-direction:column; gap:var(--space-md); margin-top:var(--space-md); }
+    .form-row { display:flex; flex-direction:column; gap:var(--space-xs); }
+    .form-row label { font-size:0.875rem; font-weight:600; }
+    .form-row input, .form-row select { padding:var(--space-sm) var(--space-md); border:1px solid var(--outline-variant); border-radius:var(--radius); font-family:var(--font-family); font-size:0.9rem; outline:none; }
+    .form-row input:focus, .form-row select:focus { border-color:var(--primary-container); }
+    .form-checkboxes { display:flex; flex-direction:column; gap:var(--space-xs); }
+    .form-checkboxes label { display:flex; align-items:center; gap:var(--space-sm); font-size:0.875rem; font-weight:400; cursor:pointer; }
+    .form-checkboxes input { accent-color:var(--primary-container); }
+  </style>
+</body>
+</html>

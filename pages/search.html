@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Resultados de búsqueda — ConstructCompare</title>
+  <meta name="description" content="Resultados de búsqueda de materiales y herramientas de construcción. Compara precios entre múltiples proveedores." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/search.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="main-navbar">
+    <div class="navbar-inner">
+      <a href="../index.html" class="navbar-brand">Construct<span>Compare</span></a>
+      <form class="navbar-search" id="search-form">
+        <input type="text" name="q" id="search-input" placeholder="Buscar materiales, herramientas…" autocomplete="off" />
+        <button type="submit" class="btn-search">
+          <span class="material-icons" style="font-size:18px">search</span>
+          Buscar
+        </button>
+      </form>
+      <nav class="navbar-links">
+        <a href="categories.html">Categorías</a>
+        <a href="compare.html">Comparar</a>
+        <a href="../admin/dashboard.html">Admin</a>
+      </nav>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-bar">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb-list">
+          <li><a href="../index.html">Inicio</a></li>
+          <li><span class="material-icons">chevron_right</span></li>
+          <li id="breadcrumb-query">Resultados</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="container search-layout" id="search-page">
+
+    <!-- ── SIDEBAR FILTROS ── -->
+    <aside class="filters-sidebar" id="filters-sidebar">
+      <div class="filters-header">
+        <h3>Filtros</h3>
+        <button class="btn btn-ghost btn-sm" id="clear-filters">Limpiar</button>
+      </div>
+
+      <!-- Marca -->
+      <div class="filter-group" id="filter-marca">
+        <h4 class="filter-title">
+          <span>Marca</span>
+          <span class="material-icons filter-toggle-icon">expand_more</span>
+        </h4>
+        <div class="filter-options">
+          <label class="filter-option">
+            <input type="checkbox" name="marca" value="bosch" id="f-bosch" />
+            <span>Bosch</span>
+            <span class="filter-count">12</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" name="marca" value="dewalt" id="f-dewalt" />
+            <span>DeWalt</span>
+            <span class="filter-count">8</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" name="marca" value="makita" id="f-makita" />
+            <span>Makita</span>
+            <span class="filter-count">15</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" name="marca" value="milwaukee" id="f-milwaukee" />
+            <span>Milwaukee</span>
+            <span class="filter-count">6</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" name="marca" value="melon" id="f-melon" />
+            <span>Melón</span>
+            <span class="filter-count">4</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Rango de precio -->
+      <div class="filter-group" id="filter-precio">
+        <h4 class="filter-title">
+          <span>Rango de Precio</span>
+          <span class="material-icons filter-toggle-icon">expand_more</span>
+        </h4>
+        <div class="filter-options">
+          <div class="price-range-inputs">
+            <div class="price-input-wrap">
+              <label for="price-min">Mín. $</label>
+              <input type="number" id="price-min" name="precio_min" placeholder="0" min="0" />
+            </div>
+            <span>—</span>
+            <div class="price-input-wrap">
+              <label for="price-max">Máx. $</label>
+              <input type="number" id="price-max" name="precio_max" placeholder="500.000" min="0" />
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="apply-price" style="width:100%;justify-content:center">Aplicar</button>
+        </div>
+      </div>
+
+      <!-- Categoría -->
+      <div class="filter-group" id="filter-categoria">
+        <h4 class="filter-title">
+          <span>Categoría</span>
+          <span class="material-icons filter-toggle-icon">expand_more</span>
+        </h4>
+        <div class="filter-options">
+          <label class="filter-option">
+            <input type="checkbox" name="cat" value="herramientas" id="f-herr" />
+            <span>Herramientas Eléctricas</span>
+            <span class="filter-count">41</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" name="cat" value="estructurales" id="f-est" />
+            <span>Materiales Estructurales</span>
+            <span class="filter-count">38</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" name="cat" value="fijaciones" id="f-fij" />
+            <span>Fijaciones y Tornillería</span>
+            <span class="filter-count">52</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" name="cat" value="pinturas" id="f-pin" />
+            <span>Pinturas y Revestimientos</span>
+            <span class="filter-count">33</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Alimentación (dinámica según categoría) -->
+      <div class="filter-group" id="filter-alimentacion">
+        <h4 class="filter-title">
+          <span>Alimentación</span>
+          <span class="material-icons filter-toggle-icon">expand_more</span>
+        </h4>
+        <div class="filter-options">
+          <label class="filter-option">
+            <input type="checkbox" name="alim" value="cable" id="f-cable" />
+            <span>Con cable</span>
+            <span class="filter-count">24</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" name="alim" value="bateria" id="f-bateria" />
+            <span>A batería</span>
+            <span class="filter-count">17</span>
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── RESULTS AREA ── -->
+    <main class="results-area" id="results-area">
+
+      <!-- Toolbar -->
+      <div class="results-toolbar" id="results-toolbar">
+        <div class="results-info">
+          <h1 class="results-title" id="results-heading">Resultados para <em id="query-display">"Taladro Percutor"</em></h1>
+          <span class="results-count text-muted" id="results-count">Mostrando 1–12 de 164 resultados</span>
+        </div>
+        <div class="results-controls">
+          <div class="sort-select-wrap">
+            <label for="sort-select" class="sr-only">Ordenar por</label>
+            <select id="sort-select" class="sort-select">
+              <option value="relevance">Relevancia</option>
+              <option value="price-asc">Precio: menor a mayor</option>
+              <option value="price-desc">Precio: mayor a menor</option>
+              <option value="providers">Más proveedores</option>
+            </select>
+          </div>
+          <div class="view-toggle">
+            <button class="view-btn active" id="view-grid" title="Vista cuadrícula">
+              <span class="material-icons">grid_view</span>
+            </button>
+            <button class="view-btn" id="view-list" title="Vista lista">
+              <span class="material-icons">view_list</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="products-grid" id="products-grid">
+
+        <!-- Card 1 -->
+        <div class="search-product-card" id="sp-dewalt-dcd796">
+          <div class="spc-badges">
+            <span class="badge badge-success">↓ -8%</span>
+            <span class="badge badge-info">5 tiendas</span>
+          </div>
+          <div class="spc-thumb">⚡</div>
+          <div class="spc-body">
+            <div class="spc-category text-muted" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Herramientas Eléctricas</div>
+            <h3 class="spc-name">
+              <a href="product.html?id=dewalt-dcd796">Taladro Percutor Inalámbrico DeWalt DCD796D2 20V XR</a>
+            </h3>
+            <div class="spc-meta">
+              <span class="category-chip" style="font-size:0.7rem">DeWalt</span>
+              <span class="category-chip" style="font-size:0.7rem">20V</span>
+              <span class="category-chip" style="font-size:0.7rem">Sin cable</span>
+            </div>
+            <div class="spc-price-row">
+              <div>
+                <div class="text-muted" style="font-size:0.75rem">Desde</div>
+                <div class="price-main md price-best">$189.990</div>
+              </div>
+              <div class="text-muted" style="font-size:0.75rem;text-align:right">
+                Hasta $249.990<br />en 5 tiendas
+              </div>
+            </div>
+            <a href="product.html?id=dewalt-dcd796" class="btn btn-primary" style="width:100%;justify-content:center">
+              Ver comparativa
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="search-product-card" id="sp-makita-xph12">
+          <div class="spc-badges">
+            <span class="badge badge-info">3 tiendas</span>
+          </div>
+          <div class="spc-thumb">🔧</div>
+          <div class="spc-body">
+            <div class="spc-category text-muted" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Herramientas Eléctricas</div>
+            <h3 class="spc-name">
+              <a href="product.html?id=makita-xph12">Taladro Percutor Compacto Makita XPH12Z 18V LXT</a>
+            </h3>
+            <div class="spc-meta">
+              <span class="category-chip" style="font-size:0.7rem">Makita</span>
+              <span class="category-chip" style="font-size:0.7rem">18V</span>
+              <span class="category-chip" style="font-size:0.7rem">Sin cable</span>
+            </div>
+            <div class="spc-price-row">
+              <div>
+                <div class="text-muted" style="font-size:0.75rem">Desde</div>
+                <div class="price-main md price-best">$145.990</div>
+              </div>
+              <div class="text-muted" style="font-size:0.75rem;text-align:right">
+                Hasta $178.000<br />en 3 tiendas
+              </div>
+            </div>
+            <a href="product.html?id=makita-xph12" class="btn btn-primary" style="width:100%;justify-content:center">
+              Ver comparativa
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="search-product-card" id="sp-bosch-gsb13">
+          <div class="spc-badges">
+            <span class="badge badge-success">Mejor precio</span>
+            <span class="badge badge-info">5 tiendas</span>
+          </div>
+          <div class="spc-thumb">🔩</div>
+          <div class="spc-body">
+            <div class="spc-category text-muted" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Herramientas Eléctricas</div>
+            <h3 class="spc-name">
+              <a href="product.html?id=bosch-gsb-13">Taladro Percutor Bosch GSB 13 RE 650W Profesional</a>
+            </h3>
+            <div class="spc-meta">
+              <span class="category-chip" style="font-size:0.7rem">Bosch</span>
+              <span class="category-chip" style="font-size:0.7rem">650W</span>
+              <span class="category-chip" style="font-size:0.7rem">Con cable</span>
+            </div>
+            <div class="spc-price-row">
+              <div>
+                <div class="text-muted" style="font-size:0.75rem">Desde</div>
+                <div class="price-main md price-best">$54.990</div>
+              </div>
+              <div class="text-muted" style="font-size:0.75rem;text-align:right">
+                Hasta $69.990<br />en 5 tiendas
+              </div>
+            </div>
+            <a href="product.html?id=bosch-gsb-13" class="btn btn-primary" style="width:100%;justify-content:center">
+              Ver comparativa
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="search-product-card" id="sp-milwaukee-2904">
+          <div class="spc-badges">
+            <span class="badge badge-secondary">Pro</span>
+            <span class="badge badge-info">2 tiendas</span>
+          </div>
+          <div class="spc-thumb">⚙️</div>
+          <div class="spc-body">
+            <div class="spc-category text-muted" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Herramientas Eléctricas</div>
+            <h3 class="spc-name">
+              <a href="product.html?id=milwaukee-2904">Taladro Percutor Milwaukee 2904-20 M18 FUEL 1/2"</a>
+            </h3>
+            <div class="spc-meta">
+              <span class="category-chip" style="font-size:0.7rem">Milwaukee</span>
+              <span class="category-chip" style="font-size:0.7rem">18V</span>
+              <span class="category-chip" style="font-size:0.7rem">Sin cable</span>
+            </div>
+            <div class="spc-price-row">
+              <div>
+                <div class="text-muted" style="font-size:0.75rem">Desde</div>
+                <div class="price-main md price-best">$289.990</div>
+              </div>
+              <div class="text-muted" style="font-size:0.75rem;text-align:right">
+                Hasta $319.000<br />en 2 tiendas
+              </div>
+            </div>
+            <a href="product.html?id=milwaukee-2904" class="btn btn-primary" style="width:100%;justify-content:center">
+              Ver comparativa
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /products-grid -->
+
+      <!-- Pagination -->
+      <div class="pagination-wrap" id="pagination">
+        <button class="page-btn" disabled id="prev-page">
+          <span class="material-icons">chevron_left</span>
+        </button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span class="page-ellipsis">…</span>
+        <button class="page-btn">14</button>
+        <button class="page-btn" id="next-page">
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+
+    </main>
+  </div><!-- /search-layout -->
+
+  <!-- Footer -->
+  <footer id="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h4 style="font-size:1.1rem;letter-spacing:-0.01em">Construct<span style="color:var(--primary-container)">Compare</span></h4>
+        <p style="font-size:0.875rem;margin-top:var(--space-sm);max-width:260px">Motor de comparación de precios para construcción y ferretería en Chile.</p>
+      </div>
+      <div>
+        <h4>Navegar</h4>
+        <a href="../index.html">Inicio</a>
+        <a href="categories.html">Categorías</a>
+        <a href="search.html">Buscar</a>
+      </div>
+      <div>
+        <h4>Sistema</h4>
+        <a href="../admin/dashboard.html">Panel Admin</a>
+        <a href="#">Aviso Legal</a>
+      </div>
+      <div></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 ConstructCompare — Comparador informativo. No somos un e-commerce.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/search.js"></script>
+</body>
+</html>

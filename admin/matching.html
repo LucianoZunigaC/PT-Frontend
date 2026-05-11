@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matching y Normalización — Admin ConstructCompare</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body class="admin-body" id="admin-matching-page">
+
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo"><span class="logo-icon">⚙️</span><div><div class="logo-name">ConstructCompare</div><div class="logo-badge">Panel Admin</div></div></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link"><span class="material-icons">dashboard</span>Dashboard</a>
+      <a href="sources.html" class="sidebar-link"><span class="material-icons">cloud_download</span>Fuentes de Datos</a>
+      <a href="scraping.html" class="sidebar-link"><span class="material-icons">sync</span>Ejecución Scraping</a>
+      <a href="products.html" class="sidebar-link"><span class="material-icons">inventory_2</span>Productos</a>
+      <a href="matching.html" class="sidebar-link active"><span class="material-icons">merge_type</span>Matching / Normalización</a>
+      <a href="categories-admin.html" class="sidebar-link"><span class="material-icons">category</span>Categorías</a>
+      <a href="errors.html" class="sidebar-link"><span class="material-icons">bug_report</span>Errores de Extracción<span class="sidebar-badge">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="../index.html" class="sidebar-link"><span class="material-icons">open_in_new</span>Ver sitio público</a>
+    </nav>
+    <div class="sidebar-user"><span class="material-icons">account_circle</span><div><div style="font-weight:600;font-size:0.875rem">Admin</div><div style="font-size:0.75rem;color:#78909c">admin@constructcompare.cl</div></div></div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="topbar-title">
+        <h1>Matching y Normalización</h1>
+        <span class="text-muted" style="font-size:0.875rem">Revisión de agrupaciones automáticas con baja confianza</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary" id="accept-all-btn"><span class="material-icons">done_all</span>Aceptar todos</button>
+        <button class="btn btn-primary" id="rerun-matching-btn"><span class="material-icons">refresh</span>Re-ejecutar matching</button>
+      </div>
+    </header>
+
+    <!-- KPIs -->
+    <div class="kpi-grid" style="margin-bottom:var(--space-xl)">
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(245,124,0,0.12);color:var(--primary-container)"><span class="material-icons">pending</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono">18</div><div class="kpi-label">Pendientes revisión</div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(46,125,50,0.1);color:#2e7d32"><span class="material-icons">merge_type</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono">9.824</div><div class="kpi-label">Agrupaciones confirmadas</div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(84,96,103,0.12);color:var(--secondary)"><span class="material-icons">percent</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono">97.8%</div><div class="kpi-label">Tasa de matching automático</div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(72,98,110,0.12);color:var(--tertiary)"><span class="material-icons">schedule</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono">Diario</div><div class="kpi-label">Frecuencia re-matching</div></div>
+      </div>
+    </div>
+
+    <!-- Explicación del proceso -->
+    <div class="admin-panel" id="panel-matching-info" style="border-left:4px solid var(--primary-container);margin-bottom:var(--space-md)">
+      <div style="display:flex;gap:var(--space-sm);align-items:flex-start">
+        <span class="material-icons" style="color:var(--primary-container);margin-top:2px">info</span>
+        <div>
+          <strong style="font-size:0.9rem">¿Qué es el Matching?</strong>
+          <p style="margin:var(--space-xs) 0 0;font-size:0.875rem;color:var(--on-surface-variant);line-height:1.6">
+            El sistema agrupa automáticamente variantes del mismo producto provenientes de distintos proveedores usando similitud de nombres y SKUs.
+            Los pares con <strong>confianza &lt; 85%</strong> requieren revisión manual. Agrupar = mismo producto en diferentes tiendas. Separar = productos distintos.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de matching -->
+    <div class="admin-panel" id="panel-matching-table">
+      <div class="panel-header">
+        <h2 class="panel-title">Pares pendientes de revisión</h2>
+        <select id="matching-filter" style="padding:6px 12px;border:1px solid var(--outline-variant);border-radius:var(--radius);font-family:var(--font-family);font-size:0.8rem;background:var(--surface-container-lowest);outline:none">
+          <option value="all">Todos</option>
+          <option value="high">Confianza ≥ 80%</option>
+          <option value="medium">Confianza 65–80%</option>
+          <option value="low">Confianza &lt; 65%</option>
+        </select>
+      </div>
+
+      <div class="matching-list" id="matching-list">
+
+        <!-- Par 1 -->
+        <div class="matching-pair" id="match-pair-1" data-confidence="78">
+          <div class="match-products">
+            <div class="match-product">
+              <div class="match-provider">Sodimac</div>
+              <div class="match-name">Cemento Melón Extra 25kg</div>
+              <div class="match-price font-mono">$7.990</div>
+              <div class="match-sku text-muted font-mono" style="font-size:0.7rem">SKU: SOD-CEM-001</div>
+            </div>
+            <div class="match-connector">
+              <span class="material-icons match-icon">compare_arrows</span>
+              <div class="confidence-wrap">
+                <div class="confidence-bar-full">
+                  <div class="confidence-fill" style="width:78%;background:#f57c00"></div>
+                </div>
+                <span class="confidence-pct">78%</span>
+              </div>
+              <div class="match-reason">Diferencia en descripción de unidad</div>
+            </div>
+            <div class="match-product">
+              <div class="match-provider">Easy</div>
+              <div class="match-name">Saco de cemento Melón 25 kilos</div>
+              <div class="match-price font-mono">$8.290</div>
+              <div class="match-sku text-muted font-mono" style="font-size:0.7rem">SKU: EZ-CE-0289</div>
+            </div>
+          </div>
+          <div class="match-actions">
+            <button class="btn btn-primary btn-sm match-accept" data-pair="1"><span class="material-icons">merge_type</span>Agrupar</button>
+            <button class="btn btn-secondary btn-sm match-reject" data-pair="1"><span class="material-icons">call_split</span>Separar</button>
+          </div>
+        </div>
+
+        <!-- Par 2 -->
+        <div class="matching-pair" id="match-pair-2" data-confidence="82">
+          <div class="match-products">
+            <div class="match-product">
+              <div class="match-provider">Construmart</div>
+              <div class="match-name">Taladro GSB 13 RE Bosch 650W</div>
+              <div class="match-price font-mono">$59.990</div>
+              <div class="match-sku text-muted font-mono" style="font-size:0.7rem">SKU: CM-HE-0451</div>
+            </div>
+            <div class="match-connector">
+              <span class="material-icons match-icon">compare_arrows</span>
+              <div class="confidence-wrap">
+                <div class="confidence-bar-full">
+                  <div class="confidence-fill" style="width:82%;background:#f57c00"></div>
+                </div>
+                <span class="confidence-pct">82%</span>
+              </div>
+              <div class="match-reason">Posible kit vs unidad individual</div>
+            </div>
+            <div class="match-product">
+              <div class="match-provider">Imperial</div>
+              <div class="match-name">Bosch GSB 13 RE Kit Profesional + Maleta</div>
+              <div class="match-price font-mono">$72.990</div>
+              <div class="match-sku text-muted font-mono" style="font-size:0.7rem">SKU: IMP-BO-0021</div>
+            </div>
+          </div>
+          <div class="match-actions">
+            <button class="btn btn-primary btn-sm match-accept" data-pair="2"><span class="material-icons">merge_type</span>Agrupar</button>
+            <button class="btn btn-secondary btn-sm match-reject" data-pair="2"><span class="material-icons">call_split</span>Separar</button>
+          </div>
+        </div>
+
+        <!-- Par 3 -->
+        <div class="matching-pair" id="match-pair-3" data-confidence="71">
+          <div class="match-products">
+            <div class="match-product">
+              <div class="match-provider">Sodimac</div>
+              <div class="match-name">Varilla corrugada 12mm x 6m B500</div>
+              <div class="match-price font-mono">$4.200</div>
+              <div class="match-sku text-muted font-mono" style="font-size:0.7rem">SKU: SOD-AC-0088</div>
+            </div>
+            <div class="match-connector">
+              <span class="material-icons match-icon">compare_arrows</span>
+              <div class="confidence-wrap">
+                <div class="confidence-bar-full">
+                  <div class="confidence-fill" style="width:71%;background:#f57c00"></div>
+                </div>
+                <span class="confidence-pct">71%</span>
+              </div>
+              <div class="match-reason">Marca diferente, mismas dimensiones</div>
+            </div>
+            <div class="match-product">
+              <div class="match-provider">HomeDepot</div>
+              <div class="match-name">Acero B500S 12mm 6 metros FerroPrecio</div>
+              <div class="match-price font-mono">$5.800</div>
+              <div class="match-sku text-muted font-mono" style="font-size:0.7rem">SKU: HD-FE-0033</div>
+            </div>
+          </div>
+          <div class="match-actions">
+            <button class="btn btn-primary btn-sm match-accept" data-pair="3"><span class="material-icons">merge_type</span>Agrupar</button>
+            <button class="btn btn-secondary btn-sm match-reject" data-pair="3"><span class="material-icons">call_split</span>Separar</button>
+          </div>
+        </div>
+
+      </div><!-- /matching-list -->
+    </div><!-- /panel-matching-table -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    document.querySelectorAll('.match-accept').forEach(btn => {
+      btn.addEventListener('click', () => { const p = document.getElementById('match-pair-' + btn.dataset.pair); if(p) { p.style.opacity='0.4'; p.style.pointerEvents='none'; } });
+    });
+    document.querySelectorAll('.match-reject').forEach(btn => {
+      btn.addEventListener('click', () => { const p = document.getElementById('match-pair-' + btn.dataset.pair); if(p) p.remove(); });
+    });
+    document.getElementById('accept-all-btn')?.addEventListener('click', () => {
+      document.querySelectorAll('.matching-pair').forEach(p => { p.style.opacity='0.4'; p.style.pointerEvents='none'; });
+    });
+    document.getElementById('rerun-matching-btn')?.addEventListener('click', () => alert('Re-ejecutando algoritmo de matching (conectar con backend)…'));
+  </script>
+  <style>
+    .matching-pair{border:1px solid var(--surface-container-high);border-radius:var(--radius-lg);padding:var(--space-md);margin-bottom:var(--space-md);transition:opacity .3s ease}
+    .match-products{display:grid;grid-template-columns:1fr auto 1fr;gap:var(--space-md);align-items:center}
+    .match-product{background:var(--surface-container-low);border-radius:var(--radius);padding:var(--space-md);display:flex;flex-direction:column;gap:var(--space-xs)}
+    .match-provider{font-size:0.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--primary-container);font-weight:600}
+    .match-name{font-weight:600;font-size:0.9rem;line-height:1.3}
+    .match-price{color:var(--on-surface);font-weight:700}
+    .match-connector{display:flex;flex-direction:column;align-items:center;gap:var(--space-xs)}
+    .match-icon{color:var(--primary-container);font-size:1.5rem}
+    .confidence-wrap{display:flex;align-items:center;gap:var(--space-xs);width:100%}
+    .confidence-bar-full{flex:1;height:6px;background:var(--surface-container-high);border-radius:var(--radius-pill);overflow:hidden}
+    .confidence-fill{height:100%;border-radius:var(--radius-pill);transition:width .3s}
+    .confidence-pct{font-size:0.75rem;font-weight:700;font-family:var(--font-mono);white-space:nowrap}
+    .match-reason{font-size:0.7rem;color:var(--on-surface-variant);text-align:center}
+    .match-actions{display:flex;gap:var(--space-sm);margin-top:var(--space-md);justify-content:flex-end}
+    @media(max-width:768px){.match-products{grid-template-columns:1fr;}.match-connector{flex-direction:row;}.match-reason{display:none}}
+  </style>
+</body>
+</html>

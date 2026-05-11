@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Administrativo — ConstructCompare</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body class="admin-body" id="admin-page">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">⚙️</span>
+      <div>
+        <div class="logo-name">ConstructCompare</div>
+        <div class="logo-badge">Panel Admin</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link active" id="nav-dashboard">
+        <span class="material-icons">dashboard</span>
+        Dashboard
+      </a>
+      <a href="sources.html" class="sidebar-link" id="nav-sources">
+        <span class="material-icons">cloud_download</span>
+        Fuentes de Datos
+      </a>
+      <a href="scraping.html" class="sidebar-link" id="nav-scraping">
+        <span class="material-icons">sync</span>
+        Ejecución Scraping
+      </a>
+      <a href="products.html" class="sidebar-link" id="nav-products">
+        <span class="material-icons">inventory_2</span>
+        Productos
+      </a>
+      <a href="matching.html" class="sidebar-link" id="nav-matching">
+        <span class="material-icons">merge_type</span>
+        Matching / Normalización
+      </a>
+      <a href="categories-admin.html" class="sidebar-link" id="nav-categories">
+        <span class="material-icons">category</span>
+        Categorías
+      </a>
+      <a href="errors.html" class="sidebar-link" id="nav-errors">
+        <span class="material-icons">bug_report</span>
+        Errores de Extracción
+        <span class="sidebar-badge">3</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <a href="../index.html" class="sidebar-link" id="nav-site">
+        <span class="material-icons">open_in_new</span>
+        Ver sitio público
+      </a>
+    </nav>
+    <div class="sidebar-user">
+      <span class="material-icons">account_circle</span>
+      <div>
+        <div style="font-weight:600;font-size:0.875rem">Admin</div>
+        <div style="font-size:0.75rem;color:#78909c">admin@constructcompare.cl</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN AREA ══ -->
+  <div class="admin-main" id="admin-main">
+
+    <!-- Top bar -->
+    <header class="admin-topbar" id="admin-topbar">
+      <div class="topbar-title">
+        <h1>Dashboard</h1>
+        <span class="text-muted" style="font-size:0.875rem" id="last-update">Última actualización: hace 12 min</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary" id="refresh-btn">
+          <span class="material-icons">refresh</span>
+          Actualizar
+        </button>
+        <button class="btn btn-primary" id="run-scraping-btn">
+          <span class="material-icons">play_arrow</span>
+          Ejecutar Scraping
+        </button>
+      </div>
+    </header>
+
+    <!-- ── KPI Cards ── -->
+    <section class="kpi-grid" id="kpi-grid">
+      <div class="kpi-card" id="kpi-products">
+        <div class="kpi-icon" style="background:rgba(245,124,0,0.12);color:var(--primary-container)">
+          <span class="material-icons">inventory_2</span>
+        </div>
+        <div class="kpi-info">
+          <div class="kpi-value font-mono">10.482</div>
+          <div class="kpi-label">Productos indexados</div>
+          <div class="kpi-delta positive">↑ +342 esta semana</div>
+        </div>
+      </div>
+      <div class="kpi-card" id="kpi-providers">
+        <div class="kpi-icon" style="background:rgba(72,98,110,0.12);color:var(--tertiary)">
+          <span class="material-icons">store</span>
+        </div>
+        <div class="kpi-info">
+          <div class="kpi-value font-mono">5</div>
+          <div class="kpi-label">Proveedores activos</div>
+          <div class="kpi-delta neutral">Sin cambios</div>
+        </div>
+      </div>
+      <div class="kpi-card" id="kpi-searches">
+        <div class="kpi-icon" style="background:rgba(84,96,103,0.12);color:var(--secondary)">
+          <span class="material-icons">search</span>
+        </div>
+        <div class="kpi-info">
+          <div class="kpi-value font-mono">1.847</div>
+          <div class="kpi-label">Búsquedas hoy</div>
+          <div class="kpi-delta positive">↑ +18% vs ayer</div>
+        </div>
+      </div>
+      <div class="kpi-card" id="kpi-errors">
+        <div class="kpi-icon" style="background:rgba(186,26,26,0.1);color:var(--error)">
+          <span class="material-icons">error_outline</span>
+        </div>
+        <div class="kpi-info">
+          <div class="kpi-value font-mono">3</div>
+          <div class="kpi-label">Errores de extracción</div>
+          <div class="kpi-delta negative">↑ +1 nueva fuente</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Two-column area ── -->
+    <div class="admin-grid-2" id="admin-grid-2">
+
+      <!-- Fuentes de datos -->
+      <section class="admin-panel" id="panel-sources">
+        <div class="panel-header">
+          <h2 class="panel-title">Fuentes de Datos</h2>
+          <button class="btn btn-secondary btn-sm" id="add-source-btn">
+            <span class="material-icons">add</span>
+            Añadir fuente
+          </button>
+        </div>
+        <table class="table-compare admin-table">
+          <thead>
+            <tr>
+              <th>Proveedor</th>
+              <th>URL</th>
+              <th>Estado</th>
+              <th>Última ejecución</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="sources-table-body">
+            <tr>
+              <td><strong>Sodimac</strong></td>
+              <td class="font-mono" style="font-size:0.8rem">sodimac.com/construccion</td>
+              <td><span class="status-dot active"></span><span class="badge badge-success">Activo</span></td>
+              <td class="font-mono" style="font-size:0.8rem">Hoy 09:00</td>
+              <td class="table-actions">
+                <button class="btn btn-ghost btn-sm" title="Ejecutar ahora"><span class="material-icons">play_arrow</span></button>
+                <button class="btn btn-ghost btn-sm" title="Editar"><span class="material-icons">edit</span></button>
+                <button class="btn btn-ghost btn-sm" title="Pausar"><span class="material-icons">pause</span></button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Easy</strong></td>
+              <td class="font-mono" style="font-size:0.8rem">easy.cl/herramientas</td>
+              <td><span class="status-dot active"></span><span class="badge badge-success">Activo</span></td>
+              <td class="font-mono" style="font-size:0.8rem">Hoy 08:55</td>
+              <td class="table-actions">
+                <button class="btn btn-ghost btn-sm" title="Ejecutar ahora"><span class="material-icons">play_arrow</span></button>
+                <button class="btn btn-ghost btn-sm" title="Editar"><span class="material-icons">edit</span></button>
+                <button class="btn btn-ghost btn-sm" title="Pausar"><span class="material-icons">pause</span></button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Construmart</strong></td>
+              <td class="font-mono" style="font-size:0.8rem">construmart.cl/catalogo</td>
+              <td><span class="status-dot active"></span><span class="badge badge-success">Activo</span></td>
+              <td class="font-mono" style="font-size:0.8rem">Hoy 07:30</td>
+              <td class="table-actions">
+                <button class="btn btn-ghost btn-sm"><span class="material-icons">play_arrow</span></button>
+                <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+                <button class="btn btn-ghost btn-sm"><span class="material-icons">pause</span></button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>HomeDepot</strong></td>
+              <td class="font-mono" style="font-size:0.8rem">homedepot.cl</td>
+              <td><span class="status-dot error"></span><span class="badge" style="background:#ffdad6;color:var(--error)">Error</span></td>
+              <td class="font-mono" style="font-size:0.8rem">Ayer 18:00</td>
+              <td class="table-actions">
+                <button class="btn btn-ghost btn-sm"><span class="material-icons">play_arrow</span></button>
+                <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+                <button class="btn btn-ghost btn-sm"><span class="material-icons">bug_report</span></button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Imperial</strong></td>
+              <td class="font-mono" style="font-size:0.8rem">imperial.cl/ferreteria</td>
+              <td><span class="status-dot active"></span><span class="badge badge-success">Activo</span></td>
+              <td class="font-mono" style="font-size:0.8rem">Hoy 10:02</td>
+              <td class="table-actions">
+                <button class="btn btn-ghost btn-sm"><span class="material-icons">play_arrow</span></button>
+                <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+                <button class="btn btn-ghost btn-sm"><span class="material-icons">pause</span></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Errores de extracción -->
+      <section class="admin-panel" id="panel-errors">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span class="material-icons" style="color:var(--error);font-size:20px">error_outline</span>
+            Errores de Extracción
+          </h2>
+          <span class="badge" style="background:#ffdad6;color:var(--error)">3 pendientes</span>
+        </div>
+        <div class="errors-list" id="errors-list">
+          <div class="error-item" id="err-1">
+            <div class="error-severity high"></div>
+            <div class="error-body">
+              <div class="error-title">HomeDepot — Timeout en conexión</div>
+              <div class="error-meta text-muted font-mono" style="font-size:0.75rem">Ayer 18:14 — homedepot.cl/herramientas/taladros</div>
+              <div class="error-message">ConnectionTimeoutError: max retries exceeded (3/3)</div>
+            </div>
+            <div class="error-actions">
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">refresh</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">check</span></button>
+            </div>
+          </div>
+          <div class="error-item" id="err-2">
+            <div class="error-severity medium"></div>
+            <div class="error-body">
+              <div class="error-title">Easy — Selector CSS cambiado</div>
+              <div class="error-meta text-muted font-mono" style="font-size:0.75rem">Hoy 08:55 — easy.cl/pinturas</div>
+              <div class="error-message">SelectorNotFound: ".product-price" no encontrado en 12 productos</div>
+            </div>
+            <div class="error-actions">
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">edit</span></button>
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">check</span></button>
+            </div>
+          </div>
+          <div class="error-item" id="err-3">
+            <div class="error-severity low"></div>
+            <div class="error-body">
+              <div class="error-title">Sodimac — Imagen no disponible</div>
+              <div class="error-meta text-muted font-mono" style="font-size:0.75rem">Hoy 09:14 — 8 productos</div>
+              <div class="error-message">ImageFetchError: URL de imagen retorna 404</div>
+            </div>
+            <div class="error-actions">
+              <button class="btn btn-ghost btn-sm"><span class="material-icons">check</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /admin-grid-2 -->
+
+    <!-- ── Matching / Normalización ── -->
+    <section class="admin-panel" id="panel-matching">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <span class="material-icons" style="font-size:20px">merge_type</span>
+          Correcciones de Matching
+        </h2>
+        <span class="badge badge-secondary">Requieren revisión manual</span>
+      </div>
+      <p class="text-muted" style="font-size:0.875rem;margin-bottom:var(--space-md)">
+        Los siguientes productos han sido agrupados automáticamente pero su coincidencia es inferior al umbral de confianza (85%).
+        Revisa y confirma o separa manualmente.
+      </p>
+      <table class="table-compare admin-table" id="matching-table">
+        <thead>
+          <tr>
+            <th>Producto A</th>
+            <th>Producto B</th>
+            <th>Confianza</th>
+            <th>Razón</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="font-mono" style="font-size:0.8rem">Cemento Melón Extra 25kg</td>
+            <td class="font-mono" style="font-size:0.8rem">Saco de cemento Melón 25 kilos</td>
+            <td><span class="confidence-bar"><span style="width:78%"></span></span> 78%</td>
+            <td class="text-muted" style="font-size:0.8rem">Diferencia en descripción de unidad</td>
+            <td>
+              <button class="btn btn-sm btn-primary" title="Confirmar agrupación">✓ Agrupar</button>
+              <button class="btn btn-sm btn-secondary" title="Separar productos">✗ Separar</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="font-mono" style="font-size:0.8rem">Taladro GSB 13 RE Bosch 650W</td>
+            <td class="font-mono" style="font-size:0.8rem">Bosch GSB 13 RE Kit Profesional</td>
+            <td><span class="confidence-bar"><span style="width:82%"></span></span> 82%</td>
+            <td class="text-muted" style="font-size:0.8rem">Posible kit vs unidad</td>
+            <td>
+              <button class="btn btn-sm btn-primary">✓ Agrupar</button>
+              <button class="btn btn-sm btn-secondary">✗ Separar</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="font-mono" style="font-size:0.8rem">Varilla corrugada 12mm x 6m B500</td>
+            <td class="font-mono" style="font-size:0.8rem">Acero B500S 12mm 6 metros FerroPrecio</td>
+            <td><span class="confidence-bar"><span style="width:71%"></span></span> 71%</td>
+            <td class="text-muted" style="font-size:0.8rem">Marca diferente, mismas dimensiones</td>
+            <td>
+              <button class="btn btn-sm btn-primary">✓ Agrupar</button>
+              <button class="btn btn-sm btn-secondary">✗ Separar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </div><!-- /admin-main -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/admin.js"></script>
+</body>
+</html>

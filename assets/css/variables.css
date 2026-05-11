@@ -1,0 +1,45 @@
+/* ConstructCompare — Design System Variables — Industrial Precision */
+:root {
+  --primary:               #964900;
+  --primary-container:     #F57C00;
+  --on-primary:            #ffffff;
+  --on-primary-container:  #572800;
+  --secondary:             #546067;
+  --secondary-container:   #d7e4ec;
+  --on-secondary:          #ffffff;
+  --tertiary:              #48626e;
+  --tertiary-container:    #86a1ae;
+  --on-tertiary:           #ffffff;
+  --surface:               #f7fafc;
+  --surface-dim:           #d7dadc;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f1f4f6;
+  --surface-container:     #ebeef0;
+  --surface-container-high:#e5e9eb;
+  --on-surface:            #181c1e;
+  --on-surface-variant:    #574235;
+  --inverse-surface:       #2d3133;
+  --outline:               #8b7263;
+  --outline-variant:       #dec1af;
+  --error:                 #ba1a1a;
+  --background:            #f7fafc;
+  --on-background:         #181c1e;
+  --font-family:           'Inter', sans-serif;
+  --font-mono:             monospace;
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   32px;
+  --space-xxl:  64px;
+  --container-max: 1280px;
+  --gutter:     24px;
+  --radius-sm:  2px;
+  --radius:     4px;
+  --radius-lg:  8px;
+  --radius-pill:9999px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.08), 0 0 0 1px var(--surface-container-high);
+  --shadow-modal:0 4px 16px rgba(0,0,0,0.14), 0 0 0 1px var(--outline-variant);
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}

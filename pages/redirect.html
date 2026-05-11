@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirigiendo a proveedor — ConstructCompare</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/redirect.css" />
+</head>
+<body class="redirect-body" id="redirect-page">
+
+  <!-- Minimal header -->
+  <header class="redirect-header">
+    <a href="../index.html" class="navbar-brand" style="text-decoration:none">Construct<span>Compare</span></a>
+  </header>
+
+  <!-- Main content -->
+  <main class="redirect-main">
+    <div class="redirect-card" id="redirect-card">
+
+      <!-- Spinner / countdown -->
+      <div class="redirect-spinner" id="redirect-spinner">
+        <div class="spinner-ring"></div>
+      </div>
+
+      <h1 class="redirect-title" id="redirect-title">
+        Estás siendo redirigido a <span id="provider-name">Sodimac</span>
+      </h1>
+      <p class="redirect-subtitle">
+        Serás transferido automáticamente en <span class="countdown-badge" id="countdown">5</span> segundos para completar tu compra con el proveedor seleccionado.
+      </p>
+
+      <!-- Product summary -->
+      <div class="redirect-product" id="redirect-product">
+        <div class="redirect-product-icon">🔧</div>
+        <div class="redirect-product-info">
+          <div class="redirect-product-name" id="product-display-name">Taladro Percutor Bosch GSB 13 RE 650W Profesional</div>
+          <div class="redirect-product-meta">
+            <span class="font-mono" style="font-size:0.8rem;color:var(--on-surface-variant)">SKU: <span id="product-sku">GSB-13-RE-B3</span></span>
+          </div>
+        </div>
+        <div class="redirect-product-price">
+          <div style="font-size:0.75rem;color:var(--on-surface-variant)">Precio Final</div>
+          <div class="price-main lg price-best" id="product-price">$54.990</div>
+          <div style="font-size:0.75rem;color:var(--on-surface-variant)">IVA Incluido</div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="redirect-actions">
+        <a href="#" class="btn btn-primary btn-lg" id="goto-now-btn">
+          <span class="material-icons">open_in_new</span>
+          Ir ahora a <span id="provider-btn-name">Sodimac</span>
+        </a>
+        <a href="javascript:history.back()" class="btn btn-secondary" id="cancel-btn">
+          <span class="material-icons">arrow_back</span>
+          Cancelar
+        </a>
+      </div>
+
+      <!-- Legal notice -->
+      <div class="redirect-legal" id="redirect-legal">
+        <span class="material-icons" style="font-size:16px;flex-shrink:0;margin-top:1px">gavel</span>
+        <p>
+          <strong>Aviso Legal:</strong> Al hacer clic en «Ir ahora» o permitir que la redirección se complete,
+          serás transferido al sitio web del proveedor (<em id="provider-legal-name">Sodimac</em>).
+          ConstructCompare actúa únicamente como motor de búsqueda y comparador de precios.
+          La transacción final, facturación, entrega y garantía del producto serán gestionadas
+          enteramente por el proveedor de destino según sus propios términos y condiciones.
+        </p>
+      </div>
+
+      <!-- Proveedores sugeridos -->
+      <div class="redirect-alternatives" id="redirect-alternatives">
+        <h3>También disponible en</h3>
+        <div class="alternatives-list">
+          <a href="redirect.html?provider=easy&product=bosch-gsb-13&price=57490" class="alt-provider">
+            <span class="alt-logo">🏬</span>
+            <span class="alt-name">Easy</span>
+            <span class="price-main" style="font-size:1rem">$57.490</span>
+          </a>
+          <a href="redirect.html?provider=construmart&product=bosch-gsb-13&price=59990" class="alt-provider">
+            <span class="alt-logo">🏗️</span>
+            <span class="alt-name">Construmart</span>
+            <span class="price-main" style="font-size:1rem">$59.990</span>
+          </a>
+          <a href="redirect.html?provider=homedepot&product=bosch-gsb-13&price=64990" class="alt-provider">
+            <span class="alt-logo">🏠</span>
+            <span class="alt-name">HomeDepot</span>
+            <span class="price-main" style="font-size:1rem">$64.990</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/redirect.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Errores de Extracción — Admin ConstructCompare</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body class="admin-body" id="admin-errors-page">
+
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo"><span class="logo-icon">⚙️</span><div><div class="logo-name">ConstructCompare</div><div class="logo-badge">Panel Admin</div></div></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link"><span class="material-icons">dashboard</span>Dashboard</a>
+      <a href="sources.html" class="sidebar-link"><span class="material-icons">cloud_download</span>Fuentes de Datos</a>
+      <a href="scraping.html" class="sidebar-link"><span class="material-icons">sync</span>Ejecución Scraping</a>
+      <a href="products.html" class="sidebar-link"><span class="material-icons">inventory_2</span>Productos</a>
+      <a href="matching.html" class="sidebar-link"><span class="material-icons">merge_type</span>Matching / Normalización</a>
+      <a href="categories-admin.html" class="sidebar-link"><span class="material-icons">category</span>Categorías</a>
+      <a href="errors.html" class="sidebar-link active"><span class="material-icons">bug_report</span>Errores de Extracción<span class="sidebar-badge">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="../index.html" class="sidebar-link"><span class="material-icons">open_in_new</span>Ver sitio público</a>
+    </nav>
+    <div class="sidebar-user"><span class="material-icons">account_circle</span><div><div style="font-weight:600;font-size:0.875rem">Admin</div><div style="font-size:0.75rem;color:#78909c">admin@constructcompare.cl</div></div></div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="topbar-title">
+        <h1>Errores de Extracción</h1>
+        <span class="text-muted" style="font-size:0.875rem">3 errores activos · Última revisión hace 12 min</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary" id="mark-all-resolved"><span class="material-icons">done_all</span>Marcar todos como resueltos</button>
+      </div>
+    </header>
+
+    <!-- Resumen por severidad -->
+    <div class="kpi-grid" style="margin-bottom:var(--space-xl)">
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(186,26,26,0.12);color:var(--error)"><span class="material-icons">error</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono" style="color:var(--error)">1</div><div class="kpi-label">Alta severidad</div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(245,124,0,0.12);color:#f57c00"><span class="material-icons">warning</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono" style="color:#f57c00">1</div><div class="kpi-label">Media severidad</div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(251,192,45,0.12);color:#f9a825"><span class="material-icons">info</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono" style="color:#f9a825">1</div><div class="kpi-label">Baja severidad</div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:rgba(46,125,50,0.1);color:#2e7d32"><span class="material-icons">check_circle</span></div>
+        <div class="kpi-info"><div class="kpi-value font-mono">7</div><div class="kpi-label">Resueltos esta semana</div></div>
+      </div>
+    </div>
+
+    <!-- Lista de errores detallada -->
+    <div class="admin-panel" id="panel-errors-list">
+      <div class="panel-header">
+        <h2 class="panel-title">Errores activos</h2>
+        <select id="filter-severity" style="padding:6px 12px;border:1px solid var(--outline-variant);border-radius:var(--radius);font-family:var(--font-family);font-size:0.8rem;background:var(--surface-container-lowest);outline:none">
+          <option value="all">Todas las severidades</option>
+          <option value="high">Alta</option>
+          <option value="medium">Media</option>
+          <option value="low">Baja</option>
+        </select>
+      </div>
+
+      <!-- Error 1 — HIGH -->
+      <div class="error-detail-card" id="error-card-1" data-severity="high">
+        <div class="error-detail-header">
+          <div class="error-sev-badge high"><span class="material-icons">error</span>Alta</div>
+          <div class="error-detail-title">HomeDepot — Timeout en conexión</div>
+          <div class="error-detail-time font-mono">Ayer 18:14 · hace 16h</div>
+        </div>
+        <div class="error-detail-body">
+          <div class="error-meta-row">
+            <span class="error-meta-label">Fuente</span>
+            <span class="font-mono">homedepot.cl/herramientas/taladros</span>
+          </div>
+          <div class="error-meta-row">
+            <span class="error-meta-label">Tipo</span>
+            <span>ConnectionTimeoutError</span>
+          </div>
+          <div class="error-meta-row">
+            <span class="error-meta-label">Mensaje</span>
+            <span class="font-mono error-message-text">max retries exceeded (3/3) · HTTPSConnectionPool(host='homedepot.cl', port=443): Read timed out. (read timeout=30)</span>
+          </div>
+          <div class="error-meta-row">
+            <span class="error-meta-label">Productos afectados</span>
+            <span>1.244 (último índice conocido)</span>
+          </div>
+          <div class="error-stacktrace">
+            <div class="stacktrace-header">Stack trace <button class="btn btn-ghost btn-sm" id="toggle-trace-1">Expandir</button></div>
+            <pre class="stacktrace-body hidden" id="trace-1">Traceback (most recent call last):
+  File "scraper/base.py", line 142, in fetch_page
+    response = requests.get(url, timeout=self.timeout)
+  File "requests/sessions.py", line 601, in get
+    return self.request('GET', url, **kwargs)
+requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='homedepot.cl', port=443):
+Read timed out. (read timeout=30)
+
+Retries: 3/3 — giving up.</pre>
+          </div>
+        </div>
+        <div class="error-detail-actions">
+          <button class="btn btn-primary btn-sm" id="retry-error-1"><span class="material-icons">replay</span>Reintentar ahora</button>
+          <a href="sources.html" class="btn btn-secondary btn-sm"><span class="material-icons">settings</span>Configurar fuente</a>
+          <button class="btn btn-ghost btn-sm resolve-btn" data-card="1"><span class="material-icons">check</span>Marcar resuelto</button>
+        </div>
+      </div>
+
+      <!-- Error 2 — MEDIUM -->
+      <div class="error-detail-card" id="error-card-2" data-severity="medium">
+        <div class="error-detail-header">
+          <div class="error-sev-badge medium"><span class="material-icons">warning</span>Media</div>
+          <div class="error-detail-title">Easy — Selector CSS cambiado</div>
+          <div class="error-detail-time font-mono">Hoy 08:55 · hace 1h</div>
+        </div>
+        <div class="error-detail-body">
+          <div class="error-meta-row">
+            <span class="error-meta-label">Fuente</span>
+            <span class="font-mono">easy.cl/pinturas</span>
+          </div>
+          <div class="error-meta-row">
+            <span class="error-meta-label">Tipo</span>
+            <span>SelectorNotFoundError</span>
+          </div>
+          <div class="error-meta-row">
+            <span class="error-meta-label">Mensaje</span>
+            <span class="font-mono error-message-text">CSS selector ".product-price" no encontrado en 12 de 203 productos. El sitio puede haber cambiado su estructura HTML.</span>
+          </div>
+          <div class="error-meta-row">
+            <span class="error-meta-label">Productos afectados</span>
+            <span>12 productos sin precio actualizado</span>
+          </div>
+          <div class="error-stacktrace">
+            <div class="stacktrace-header">Stack trace <button class="btn btn-ghost btn-sm" id="toggle-trace-2">Expandir</button></div>
+            <pre class="stacktrace-body hidden" id="trace-2">scraper/easy_scraper.py", line 89, in parse_price
+    price_el = soup.select_one('.product-price')
+    if not price_el:
+        raise SelectorNotFoundError(f"Selector '.product-price' missing for SKU: {sku}")
+
+SelectorNotFoundError: Selector '.product-price' missing for SKU: EZ-PI-0099</pre>
+          </div>
+        </div>
+        <div class="error-detail-actions">
+          <button class="btn btn-primary btn-sm" id="edit-selector-btn"><span class="material-icons">edit</span>Editar selector</button>
+          <button class="btn btn-ghost btn-sm resolve-btn" data-card="2"><span class="material-icons">check</span>Marcar resuelto</button>
+        </div>
+      </div>
+
+      <!-- Error 3 — LOW -->
+      <div class="error-detail-card" id="error-card-3" data-severity="low">
+        <div class="error-detail-header">
+          <div class="error-sev-badge low"><span class="material-icons">info</span>Baja</div>
+          <div class="error-detail-title">Sodimac — Imagen no disponible (404)</div>
+          <div class="error-detail-time font-mono">Hoy 09:14 · hace 47 min</div>
+        </div>
+        <div class="error-detail-body">
+          <div class="error-meta-row">
+            <span class="error-meta-label">Fuente</span>
+            <span class="font-mono">sodimac.cl/construccion</span>
+          </div>
+          <div class="error-meta-row">
+            <span class="error-meta-label">Tipo</span>
+            <span>ImageFetchError</span>
+          </div>
+          <div class="error-meta-row">
+            <span class="error-meta-label">Mensaje</span>
+            <span class="font-mono error-message-text">8 URLs de imagen retornan HTTP 404. Los productos se indexaron correctamente sin imagen.</span>
+          </div>
+          <div class="error-meta-row">
+            <span class="error-meta-label">Productos afectados</span>
+            <span>8 productos sin imagen (datos correctos)</span>
+          </div>
+        </div>
+        <div class="error-detail-actions">
+          <button class="btn btn-secondary btn-sm" id="view-affected-btn"><span class="material-icons">list</span>Ver productos afectados</button>
+          <button class="btn btn-ghost btn-sm resolve-btn" data-card="3"><span class="material-icons">check</span>Marcar resuelto</button>
+        </div>
+      </div>
+
+    </div><!-- /panel-errors-list -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    // Toggle stack trace
+    [1,2].forEach(n => {
+      document.getElementById('toggle-trace-'+n)?.addEventListener('click', () => {
+        const trace = document.getElementById('trace-'+n);
+        const btn = document.getElementById('toggle-trace-'+n);
+        if(trace) { trace.classList.toggle('hidden'); btn.textContent = trace.classList.contains('hidden') ? 'Expandir' : 'Colapsar'; }
+      });
+    });
+    // Marcar resuelto
+    document.querySelectorAll('.resolve-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = document.getElementById('error-card-'+btn.dataset.card);
+        if(card) { card.style.opacity='0.4'; card.style.pointerEvents='none'; }
+      });
+    });
+    document.getElementById('mark-all-resolved')?.addEventListener('click', () => {
+      document.querySelectorAll('.error-detail-card').forEach(c => { c.style.opacity='0.4'; c.style.pointerEvents='none'; });
+    });
+    document.getElementById('retry-error-1')?.addEventListener('click', () => alert('Reintentando HomeDepot (conectar con backend)…'));
+    document.getElementById('edit-selector-btn')?.addEventListener('click', () => alert('Editor de selectores CSS (funcionalidad futura).'));
+    document.getElementById('view-affected-btn')?.addEventListener('click', () => alert('Abriendo lista de productos afectados…'));
+  </script>
+  <style>
+    .error-detail-card{border:1px solid var(--surface-container-high);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:var(--space-md);transition:opacity .3s}
+    .error-detail-header{display:flex;align-items:center;gap:var(--space-md);padding:var(--space-md);border-bottom:1px solid var(--surface-container-high);flex-wrap:wrap;background:var(--surface-container-low)}
+    .error-sev-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:var(--radius-pill);font-size:0.75rem;font-weight:700;flex-shrink:0}
+    .error-sev-badge .material-icons{font-size:14px}
+    .error-sev-badge.high{background:#ffdad6;color:var(--error)}
+    .error-sev-badge.medium{background:#fff3e0;color:#e65100}
+    .error-sev-badge.low{background:#fffde7;color:#f57f17}
+    .error-detail-title{font-weight:700;flex:1;font-size:0.9375rem}
+    .error-detail-time{font-size:0.75rem;color:var(--on-surface-variant);margin-left:auto}
+    .error-detail-body{padding:var(--space-md);display:flex;flex-direction:column;gap:var(--space-sm)}
+    .error-meta-row{display:flex;gap:var(--space-md);align-items:flex-start;font-size:0.875rem}
+    .error-meta-label{width:140px;flex-shrink:0;color:var(--on-surface-variant);font-weight:500}
+    .error-message-text{font-size:0.8125rem;color:var(--error);line-height:1.5}
+    .stacktrace-header{font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:var(--space-sm);padding-top:var(--space-xs);color:var(--on-surface-variant)}
+    .stacktrace-body{margin:var(--space-xs) 0 0;background:var(--inverse-surface);color:#90a4ae;padding:var(--space-sm) var(--space-md);border-radius:var(--radius);font-size:0.75rem;line-height:1.6;overflow-x:auto;white-space:pre}
+    .stacktrace-body.hidden{display:none}
+    .error-detail-actions{display:flex;gap:var(--space-sm);padding:var(--space-md);border-top:1px solid var(--surface-container-high);background:var(--surface-container-low);flex-wrap:wrap}
+  </style>
+</body>
+</html>
