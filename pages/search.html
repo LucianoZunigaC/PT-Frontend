@@ -28,7 +28,6 @@
       <nav class="navbar-links">
         <a href="categories.html">Categorías</a>
         <a href="compare.html">Comparar</a>
-        <a href="../admin/dashboard.html">Admin</a>
       </nav>
     </div>
   </nav>
@@ -56,38 +55,15 @@
         <button class="btn btn-ghost btn-sm" id="clear-filters">Limpiar</button>
       </div>
 
-      <!-- Marca -->
+      <!-- Marca (Dinámica) -->
       <div class="filter-group" id="filter-marca">
         <h4 class="filter-title">
           <span>Marca</span>
-          <span class="material-icons filter-toggle-icon">expand_more</span>
+          <span class="material-icons filter-toggle-icon">expand_less</span>
         </h4>
-        <div class="filter-options">
-          <label class="filter-option">
-            <input type="checkbox" name="marca" value="bosch" id="f-bosch" />
-            <span>Bosch</span>
-            <span class="filter-count">12</span>
-          </label>
-          <label class="filter-option">
-            <input type="checkbox" name="marca" value="dewalt" id="f-dewalt" />
-            <span>DeWalt</span>
-            <span class="filter-count">8</span>
-          </label>
-          <label class="filter-option">
-            <input type="checkbox" name="marca" value="makita" id="f-makita" />
-            <span>Makita</span>
-            <span class="filter-count">15</span>
-          </label>
-          <label class="filter-option">
-            <input type="checkbox" name="marca" value="milwaukee" id="f-milwaukee" />
-            <span>Milwaukee</span>
-            <span class="filter-count">6</span>
-          </label>
-          <label class="filter-option">
-            <input type="checkbox" name="marca" value="melon" id="f-melon" />
-            <span>Melón</span>
-            <span class="filter-count">4</span>
-          </label>
+        <div class="filter-options" id="filter-options-marcas">
+          <!-- Renderizado dinámico por search.js -->
+          <div class="text-muted" style="font-size:0.8rem;padding:4px">Cargando...</div>
         </div>
       </div>
 
@@ -95,7 +71,7 @@
       <div class="filter-group" id="filter-precio">
         <h4 class="filter-title">
           <span>Rango de Precio</span>
-          <span class="material-icons filter-toggle-icon">expand_more</span>
+          <span class="material-icons filter-toggle-icon">expand_less</span>
         </h4>
         <div class="filter-options">
           <div class="price-range-inputs">
@@ -106,60 +82,22 @@
             <span>—</span>
             <div class="price-input-wrap">
               <label for="price-max">Máx. $</label>
-              <input type="number" id="price-max" name="precio_max" placeholder="500.000" min="0" />
+              <input type="number" id="price-max" name="precio_max" placeholder="Máx." min="0" />
             </div>
           </div>
           <button class="btn btn-secondary btn-sm" id="apply-price" style="width:100%;justify-content:center">Aplicar</button>
         </div>
       </div>
 
-      <!-- Categoría -->
-      <div class="filter-group" id="filter-categoria">
+      <!-- Tiendas / Proveedores (Dinámico) -->
+      <div class="filter-group" id="filter-proveedor">
         <h4 class="filter-title">
-          <span>Categoría</span>
-          <span class="material-icons filter-toggle-icon">expand_more</span>
+          <span>Tienda</span>
+          <span class="material-icons filter-toggle-icon">expand_less</span>
         </h4>
-        <div class="filter-options">
-          <label class="filter-option">
-            <input type="checkbox" name="cat" value="herramientas" id="f-herr" />
-            <span>Herramientas Eléctricas</span>
-            <span class="filter-count">41</span>
-          </label>
-          <label class="filter-option">
-            <input type="checkbox" name="cat" value="estructurales" id="f-est" />
-            <span>Materiales Estructurales</span>
-            <span class="filter-count">38</span>
-          </label>
-          <label class="filter-option">
-            <input type="checkbox" name="cat" value="fijaciones" id="f-fij" />
-            <span>Fijaciones y Tornillería</span>
-            <span class="filter-count">52</span>
-          </label>
-          <label class="filter-option">
-            <input type="checkbox" name="cat" value="pinturas" id="f-pin" />
-            <span>Pinturas y Revestimientos</span>
-            <span class="filter-count">33</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- Alimentación (dinámica según categoría) -->
-      <div class="filter-group" id="filter-alimentacion">
-        <h4 class="filter-title">
-          <span>Alimentación</span>
-          <span class="material-icons filter-toggle-icon">expand_more</span>
-        </h4>
-        <div class="filter-options">
-          <label class="filter-option">
-            <input type="checkbox" name="alim" value="cable" id="f-cable" />
-            <span>Con cable</span>
-            <span class="filter-count">24</span>
-          </label>
-          <label class="filter-option">
-            <input type="checkbox" name="alim" value="bateria" id="f-bateria" />
-            <span>A batería</span>
-            <span class="filter-count">17</span>
-          </label>
+        <div class="filter-options" id="filter-options-proveedores">
+          <!-- Renderizado dinámico por search.js -->
+          <div class="text-muted" style="font-size:0.8rem;padding:4px">Cargando...</div>
         </div>
       </div>
     </aside>
@@ -358,8 +296,7 @@
         <a href="search.html">Buscar</a>
       </div>
       <div>
-        <h4>Sistema</h4>
-        <a href="../admin/dashboard.html">Panel Admin</a>
+        <h4>Legal</h4>
         <a href="#">Aviso Legal</a>
       </div>
       <div></div>
