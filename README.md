@@ -1,100 +1,116 @@
-# ConstructCompare — Frontend
+# ConstructCompare - Frontend
 
-Comparador de precios para materiales de construcción, ferretería y herramientas.
+Frontend oficial de **ConstructCompare**, la plataforma líder de comparación de precios de materiales de construcción y ferretería.
+Esta aplicación web proporciona una interfaz intuitiva para que los usuarios puedan cotizar, buscar y comparar productos a través de diferentes proveedores en tiempo real, conectándose con el backend principal.
 
-## Estructura de Carpetas
+## Key Features
 
-```
-Frontend/
-│
-├── index.html                      # Home y Buscador (Desktop)
-├── 404.html                        # Página de error estándar
-├── README.md
-│
-├── pages/
-│   ├── search.html                 # Resultados de Búsqueda
-│   ├── product.html                # Ficha de Producto / Comparativa de Precios
-│   ├── redirect.html               # Redirección a Proveedor
-│   ├── categories.html             # Catálogo de Categorías (con filtros por chip)
-│   └── compare.html                # Comparador lado a lado (hasta 4 productos)
-│
-├── admin/
-│   ├── dashboard.html              # Panel Administrativo — KPIs y resumen
-│   ├── sources.html                # Gestión de Fuentes de Datos
-│   ├── scraping.html               # Log de Ejecución de Scraping en vivo
-│   ├── products.html               # Gestión de Productos indexados
-│   ├── matching.html               # Revisión de Matching / Normalización
-│   ├── categories-admin.html       # Gestión de Categorías (árbol expandible)
-│   └── errors.html                 # Errores de Extracción con stack trace
-│
-├── components/                     # (futuro) Componentes reutilizables HTML
-│
-├── assets/
-│   ├── css/
-│   │   ├── variables.css           # Design tokens (colores, tipografía, spacing)
-│   │   ├── main.css                # Estilos globales: navbar, botones, cards, footer
-│   │   ├── home.css                # Estilos del Home
-│   │   ├── search.css              # Estilos de resultados de búsqueda
-│   │   ├── product.css             # Estilos de la ficha de producto
-│   │   ├── redirect.css            # Estilos de la página de redirección
-│   │   ├── categories.css          # Estilos del catálogo de categorías
-│   │   ├── compare.css             # Estilos del comparador lado a lado
-│   │   └── admin.css               # Estilos del panel administrativo
-│   │
-│   ├── js/
-│   │   ├── main.js                 # Funciones globales (URL params, helpers)
-│   │   ├── home.js                 # Lógica del Home
-│   │   ├── search.js               # Lógica de búsqueda y filtros
-│   │   ├── product.js              # Lógica de la ficha de producto
-│   │   ├── redirect.js             # Countdown y redirección automática
-│   │   ├── categories.js           # Filtros de categorías
-│   │   ├── compare.js              # Lógica del comparador
-│   │   └── admin.js                # Lógica del panel admin
-│   │
-│   ├── images/                     # Imágenes estáticas
-│   └── icons/                      # Íconos personalizados
+- **Búsqueda Dinámica:** Interfaz rápida para buscar materiales (cemento, herramientas, etc.).
+- **Fichas de Comparación:** Visualización unificada del precio de un mismo producto en distintas tiendas (Ej. Sodimac, MercadoLibre, Imperial).
+- **Categorización Intuitiva:** Exploración por rubros: estructurales, herramientas eléctricas, fijaciones, pinturas.
+- **Panel Administrativo:** Interfaz para el administrador para gestionar las métricas del comparador.
+- **Diseño Responsive:** Adaptado para móviles y computadoras usando Bootstrap 5 y Vanilla CSS.
+
+## Tech Stack
+
+- **Language**: HTML5, CSS3, JavaScript (Vanilla ES6)
+- **Framework CSS**: Bootstrap 5.3.3
+- **Icons**: Google Material Icons
+- **Fonts**: Inter (Google Fonts)
+- **Deployment**: Estático (Vercel, Netlify, GitHub Pages, o servidor Nginx/Apache)
+
+## Prerequisites
+
+Dado que es una aplicación Vanilla HTML/JS, no requiere de Node.js ni bundlers complejos (Webpack/Vite) para funcionar en su modo básico. Solo se requiere:
+
+- Un navegador web moderno (Chrome, Firefox, Safari, Edge).
+- Un servidor local (como Live Server de VSCode, o `http-server` de Node) para evitar problemas de CORS al hacer peticiones a la API.
+
+## Getting Started
+
+### 1. Clonar el Repositorio
+
+```bash
+git clone https://github.com/LucianoZunigaC/PT-Frontend.git
+cd PT-Frontend
 ```
 
-## Inventario de Páginas — 14 páginas
+### 2. Configurar el Backend
 
-| # | Página | Archivo | Descripción |
-|---|--------|---------|-------------|
-| 1 | Home | `index.html` | Hero con buscador, categorías, productos destacados, índice de precios |
-| 2 | Resultados de Búsqueda | `pages/search.html` | Sidebar de filtros + grid de productos comparables |
-| 3 | Ficha de Producto | `pages/product.html` | Specs técnicas + tabla comparativa por tienda + historial |
-| 4 | Redirección | `pages/redirect.html` | Countdown 5s + aviso legal + alternativas |
-| 5 | Catálogo de Categorías | `pages/categories.html` | 4 categorías, 22 subcategorías, filtro por chip |
-| 6 | Comparador | `pages/compare.html` | Comparador lado a lado: specs, precios, disponibilidad |
-| 7 | 404 | `404.html` | Página de error con diseño Industrial Precision |
-| 8 | Dashboard Admin | `admin/dashboard.html` | KPIs + fuentes + errores + matching |
-| 9 | Fuentes de Datos | `admin/sources.html` | CRUD de fuentes de scraping + modal |
-| 10 | Scraping | `admin/scraping.html` | Log en vivo con barra de progreso animada |
-| 11 | Productos | `admin/products.html` | Gestión con búsqueda, filtros y paginación |
-| 12 | Matching | `admin/matching.html` | Revisión de pares con barra de confianza |
-| 13 | Categorías Admin | `admin/categories-admin.html` | Árbol expandible de categorías/subcategorías |
-| 14 | Errores | `admin/errors.html` | Detalle de errores con stack trace expandible |
+El frontend necesita comunicarse con la API del Backend de Plataforma de Precios.
+Asegúrate de que el backend esté ejecutándose (por defecto en `http://localhost:3000`).
 
-## Design System — Industrial Precision
+*(Nota: En los archivos `assets/js/*.js` puedes encontrar las URLs base configuradas que apuntan a la API local).*
 
-- **Color primario**: Safety Orange `#F57C00`
-- **Fondo**: Clean White `#f7fafc`
-- **Tipografía**: Inter (Google Fonts)
-- **Grid**: 12 columnas, máx. 1280px
-- **Spacing base**: 8px
-- **Border radius**: 4px (botones/inputs) — 8px (cards)
+### 3. Iniciar un Servidor de Desarrollo Local
 
-## Stack Tecnológico (Frontend)
+Puedes usar cualquier servidor estático.
 
-- HTML5 semántico
-- CSS3 con Custom Properties (sin frameworks CSS externos)
-- Bootstrap 5.3 (grid y utilidades de layout)
-- JavaScript vanilla (ES2021)
-- Google Fonts + Material Icons
-- (futuro) Chart.js para historial de precios
-- (futuro) API REST FastAPI/Node.js para datos dinámicos
+**Opción A: Usando Node.js (http-server)**
+```bash
+npx http-server .
+```
 
-## Convención de Nomenclatura
+**Opción B: Usando Python**
+```bash
+python -m http.server 8080
+```
 
-- IDs únicos descriptivos en todos los elementos interactivos
-- Clases BEM-like para componentes
-- Prefijos por sección: `kpi-`, `cat-`, `compare-`, `match-`, `error-`, etc.
+**Opción C: Extensión Live Server en VSCode**
+Simplemente haz clic derecho en `index.html` y selecciona "Open with Live Server".
+
+Abre tu navegador en [http://localhost:8080](http://localhost:8080) (o el puerto que te indique tu servidor).
+
+## Architecture
+
+### Directory Structure
+
+```
+├── index.html          # Página principal (Home)
+├── 404.html            # Página de error
+├── README.md           # Este archivo
+├── assets/             # Recursos estáticos
+│   ├── css/            # Hojas de estilo
+│   │   ├── main.css      # Estilos globales y reset
+│   │   ├── variables.css # Tokens de diseño (colores, fuentes)
+│   │   └── home.css      # Estilos específicos de la home
+│   ├── js/             # Lógica JavaScript Vanilla
+│   │   ├── main.js       # Scripts globales (navbar, utilidades)
+│   │   └── home.js       # Lógica de la página principal
+│   └── img/            # Imágenes y logotipos
+├── pages/              # Páginas secundarias del portal
+│   ├── search.html     # Resultados de búsqueda
+│   ├── compare.html    # Ficha comparativa del producto
+│   └── categories.html # Navegación por catálogo
+└── admin/              # Panel administrativo
+    └── dashboard.html  # Dashboard de analíticas y control
+```
+
+### Data Flow
+
+1. **Usuario realiza búsqueda:** En `index.html`, el usuario ingresa un término en el input de búsqueda.
+2. **Redirección:** El formulario redirige a `pages/search.html?q=termino`.
+3. **Petición a la API:** El script `search.js` captura el parámetro de la URL y hace un `fetch()` al backend (`http://localhost:3000/api/productos/busqueda?q=termino`).
+4. **Renderizado:** La respuesta JSON unificada es parseada y renderizada en tarjetas HTML (`product-card`).
+5. **Comparativa:** Al hacer clic en un producto, el usuario es llevado a `compare.html?id=...` donde se visualiza el detalle y la comparativa entre tiendas.
+
+## Deployment
+
+Al ser una aplicación completamente estática, su despliegue es muy sencillo.
+
+### Vercel / Netlify
+1. Conecta el repositorio de GitHub.
+2. Establece el directorio raíz como ruta a servir.
+3. No se requiere comando de compilación (Build command en blanco).
+
+### Servidor Tradicional (Nginx / Apache)
+Simplemente copia todo el contenido del directorio al `DocumentRoot` (ej. `/var/www/html`).
+
+## Troubleshooting
+
+### No se muestran los productos al buscar
+**Error:** Al buscar un producto, la página de resultados se queda en blanco o muestra un error en la consola (`Failed to fetch`).
+**Solución:**
+- Verifica que el Backend de Plataforma de Precios esté ejecutándose localmente.
+- Asegúrate de que el Backend tenga los CORS habilitados.
+- Revisa las peticiones de red en la pestaña *Network* (Red) de las herramientas de desarrollador (F12) de tu navegador para confirmar a qué URL se está haciendo el `fetch`.
