@@ -1,20 +1,14 @@
 /* redirect.js — Página de Redirección */
 'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const provider = getParam('provider') || 'Proveedor';
-  const product  = getParam('product')  || '';
-  const price    = getParam('price')    || '';
+const API_BASE = 'http://localhost:3000/api';
 
-  // Mapa de nombres amigables de proveedores
-  const PROVIDER_NAMES = {
-    sodimac:    'Sodimac',
-    easy:       'Easy',
-    construmart:'Construmart',
-    homedepot:  'HomeDepot Professional',
-    imperial:   'Imperial Ferretería',
-  };
-  const providerDisplay = PROVIDER_NAMES[provider.toLowerCase()] || provider;
+document.addEventListener('DOMContentLoaded', async () => {
+  const provider = getParam('provider') || getParam('nombre') || 'Proveedor';
+  const productId = getParam('product_id');
+  const providerId = getParam('proveedor_id');
+  
+  const providerDisplay = decodeURIComponent(provider);
 
   // Actualizar textos dinámicos
   const els = {
@@ -24,20 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   Object.values(els).forEach(el => { if (el) el.textContent = providerDisplay; });
 
-  if (price) {
-    const el = document.getElementById('product-price');
-    if (el) el.textContent = formatPrice(price);
-  }
+  let destinationUrl = '#';
 
-  // URL destino (en producción vendría del backend)
-  const PROVIDER_URLS = {
-    sodimac:    'https://www.sodimac.cl',
-    easy:       'https://www.easy.cl',
-    construmart:'https://www.construmart.cl',
-    homedepot:  'https://www.homedepot.cl',
-    imperial:   'https://www.imperial.cl',
-  };
-  const destinationUrl = PROVIDER_URLS[provider.toLowerCase()] || '#';
+  if (productId && providerId) {
+    try {
+      // Registrar redirección asíncronamente
+      fetch(`${API_BASE}/redirecciones`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ producto_id: productId, proveedor_id: providerId })
+      }).catch(err => console.error('Error registrando redirección:', err));
+
+      // Obtener URL destino real
+      const res = await fetch(`${API_BASE}/redirecciones/url?producto_id=${productId}&proveedor_id=${providerId}`);
+      const data = await res.json();
+      
+      if (!data.error && data.url_destino) {
+        destinationUrl = data.url_destino;
+      }
+    } catch (err) {
+      console.error('Error obteniendo URL:', err);
+    }
+  }
 
   const gotoBtn = document.getElementById('goto-now-btn');
   if (gotoBtn) gotoBtn.setAttribute('href', destinationUrl);
@@ -50,7 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (countdownEl) countdownEl.textContent = seconds;
     if (seconds <= 0) {
       clearInterval(timer);
-      window.location.href = destinationUrl;
+      if (destinationUrl !== '#') {
+        window.location.href = destinationUrl;
+      }
     }
   }, 1000);
 
