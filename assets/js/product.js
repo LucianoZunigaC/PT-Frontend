@@ -24,6 +24,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('product-name').textContent = producto.nombre;
     document.querySelector('.product-emoji-large').innerHTML = `<img src="${producto.imagen || 'https://via.placeholder.com/300'}" alt="${producto.nombre}" style="width:100%;max-width:300px;object-fit:contain;" />`;
     
+    // Poblar descripción
+    const descEl = document.querySelector('.product-description');
+    if (descEl) {
+      descEl.textContent = producto.descripcion || 'No hay descripción disponible para este producto.';
+    }
+
+    // Poblar especificaciones
+    const specsTbody = document.querySelector('.specs-table tbody');
+    if (specsTbody) {
+      if (producto.especificaciones && Object.keys(producto.especificaciones).length > 0) {
+        let specsHtml = '';
+        for (const [key, val] of Object.entries(producto.especificaciones)) {
+          specsHtml += `<tr><td>${key}</td><td class="font-mono">${val}</td></tr>`;
+        }
+        specsTbody.innerHTML = specsHtml;
+      } else {
+        specsTbody.innerHTML = '<tr><td colspan="2" class="text-center">No hay especificaciones técnicas registradas.</td></tr>';
+      }
+    }
+    
     const catChip = document.querySelector('.tags-section .category-chip:first-child');
     if (catChip && producto.categoria) catChip.textContent = producto.categoria.nombre;
     
@@ -99,7 +119,10 @@ document.addEventListener('DOMContentLoaded', async () => {
           const maxVal = stats.maximo * 1.1 || 1;
 
           chartBarsContainer.innerHTML = histData.historial.map((h, i) => {
-            const heightPct = Math.max(10, ((h.precio_promedio - minVal) / (maxVal - minVal)) * 100);
+            let heightPct = 100;
+            if (maxVal > minVal) {
+              heightPct = Math.max(10, ((h.precio_promedio - minVal) / (maxVal - minVal)) * 100);
+            }
             return `<div class="chart-bar" style="height:${heightPct}%" title="${formatPrice(h.precio_promedio)} — ${h.fecha}"></div>`;
           }).join('');
 
