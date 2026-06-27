@@ -2,8 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <script>
+    // Aplicar tema antes del primer pintado (evita parpadeo)
+    (function(){
+      var t = localStorage.getItem('cc-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Matching y Normalización — Admin ConstructCompare</title>
+  <title>Matching y Normalización — Admin MaterialScan</title>
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
@@ -15,7 +23,30 @@
 <body class="admin-body" id="admin-matching-page">
 
   <aside class="admin-sidebar">
-    <div class="sidebar-logo"><span class="logo-icon">⚙️</span><div><div class="logo-name">ConstructCompare</div><div class="logo-badge">Panel Admin</div></div></div>
+        <div class="sidebar-logo">
+      <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:var(--primary-container);flex-shrink:0">
+        <defs>
+          <clipPath id="lens-clip-admin">
+            <circle cx="45" cy="45" r="31" />
+          </clipPath>
+        </defs>
+        <circle cx="45" cy="45" r="33.5" stroke="currentColor" stroke-width="5" />
+        <line x1="68.5" y1="68.5" x2="90" y2="90" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
+        <g clip-path="url(#lens-clip-admin)">
+          <path d="M10 20 H80 M10 32 H80 M10 44 H80 M10 56 H80 M10 68 H80 M20 10 V80 M32 10 V80 M44 10 V80 M56 10 V80 M68 10 V80" stroke="currentColor" stroke-width="1" opacity="0.35" />
+          <polygon points="21,38 38,28 55,38 38,48" fill="var(--navbar-bg)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+          <polygon points="21,38 38,48 38,62 21,52" fill="var(--navbar-bg)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+          <polygon points="38,48 55,38 55,52 38,62" fill="var(--navbar-bg)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+          <polygon points="27,36 33,32 37,34 31,38" fill="none" stroke="currentColor" stroke-width="1.5" />
+          <polygon points="38,39 44,35 48,37 42,41" fill="none" stroke="currentColor" stroke-width="1.5" />
+          <path d="M47,44 C47,49 50,50 53,48" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <path d="M51,49 L58,43 C60,41 63,41 65,43 L71,49 C73,51 73,54 71,56 L64,62 C62,64 59,64 57,62 L51,56 C49,54 49,51 51,49 Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+          <circle cx="55" cy="51" r="1" fill="var(--navbar-bg)" />
+          <text x="60" y="56" fill="var(--navbar-bg)" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="900" text-anchor="middle" transform="rotate(8, 60, 56)">$</text>
+        </g>
+      </svg>
+      <div><div class="logo-name">MaterialScan</div><div class="logo-badge">Panel Admin</div></div>
+    </div><div class="logo-badge">Panel Admin</div></div></div>
     <nav class="sidebar-nav">
       <a href="dashboard.html" class="sidebar-link"><span class="material-icons">dashboard</span>Dashboard</a>
       <a href="sources.html" class="sidebar-link"><span class="material-icons">cloud_download</span>Fuentes de Datos</a>
@@ -27,7 +58,7 @@
       <div class="sidebar-divider"></div>
       <a href="../index.html" class="sidebar-link"><span class="material-icons">open_in_new</span>Ver sitio público</a>
     </nav>
-    <div class="sidebar-user"><span class="material-icons">account_circle</span><div><div style="font-weight:600;font-size:0.875rem">Admin</div><div style="font-size:0.75rem;color:#78909c">admin@constructcompare.cl</div></div></div>
+    <div class="sidebar-user"><span class="material-icons">account_circle</span><div><div style="font-weight:600;font-size:0.875rem">Admin</div><div style="font-size:0.75rem;color:#78909c">admin@MaterialScan.cl</div></div></div>
   </aside>
 
   <div class="admin-main">
@@ -37,9 +68,12 @@
         <span class="text-muted" style="font-size:0.875rem">Revisión de agrupaciones automáticas con baja confianza</span>
       </div>
       <div class="topbar-actions">
+<button class="theme-toggle" id="theme-toggle-btn" aria-label="Cambiar modo de color" title="Modo oscuro`><span class="material-icons icon-light`>dark_mode</span><span class="material-icons icon-dark`>light_mode</span></button>
+
         <button class="btn btn-secondary" id="accept-all-btn"><span class="material-icons">done_all</span>Aceptar todos</button>
         <button class="btn btn-primary" id="rerun-matching-btn"><span class="material-icons">refresh</span>Re-ejecutar matching</button>
-      </div>
+      
+</div>
     </header>
 
     <!-- KPIs -->

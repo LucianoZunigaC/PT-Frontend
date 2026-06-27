@@ -1,31 +1,83 @@
-/* ConstructCompare — Design System Variables — Industrial Precision */
-:root {
-  --primary:               #964900;
-  --primary-container:     #F57C00;
+/* MaterialScan — Design System Variables */
+/* Modo claro (por defecto) — Paleta teal/verde */
+:root,
+[data-theme="light"] {
+  /* ── Colores primarios (teal-verde) ── */
+  --primary:               #3d6b63;        /* teal oscuro activo */
+  --primary-container:     #5A8B81;        /* teal medio — botones/accents */
   --on-primary:            #ffffff;
-  --on-primary-container:  #572800;
-  --secondary:             #546067;
-  --secondary-container:   #d7e4ec;
-  --on-secondary:          #ffffff;
-  --tertiary:              #48626e;
-  --tertiary-container:    #86a1ae;
-  --on-tertiary:           #ffffff;
-  --surface:               #f7fafc;
-  --surface-dim:           #d7dadc;
+  --on-primary-container:  #0e2b27;
+
+  /* ── Colores secundarios ── */
+  --secondary:             #8DB4AD;        /* teal claro */
+  --secondary-container:   #d4eae6;
+  --on-secondary:          #1a3d38;
+  --on-secondary-container:#0e2b27;
+
+  /* ── Colores terciarios ── */
+  --tertiary:              #A8CEC9;        /* menta suave */
+  --tertiary-container:    #C5DED9;
+  --on-tertiary:           #1a3d38;
+  --on-tertiary-container: #1a3d38;
+
+  /* ── Superficies ── */
+  --surface:               #F2F4F4;
+  --surface-dim:           #d4d8d8;
   --surface-container-lowest: #ffffff;
-  --surface-container-low: #f1f4f6;
-  --surface-container:     #ebeef0;
-  --surface-container-high:#e5e9eb;
-  --on-surface:            #181c1e;
-  --on-surface-variant:    #574235;
-  --inverse-surface:       #2d3133;
-  --outline:               #8b7263;
-  --outline-variant:       #dec1af;
+  --surface-container-low: #eef1f1;
+  --surface-container:     #e8ecec;
+  --surface-container-high:#dde2e2;
+  --on-surface:            #1a1f1f;
+  --on-surface-variant:    #3d5452;
+  --inverse-surface:       #2a3535;
+  --outline:               #5A8B81;
+  --outline-variant:       #b0cfcb;
+
+  /* ── Estado ── */
   --error:                 #ba1a1a;
-  --background:            #f7fafc;
-  --on-background:         #181c1e;
+
+  /* ── Background ── */
+  --background:            #F2F4F4;
+  --on-background:         #1a1f1f;
+
+  /* ── Navbar específico ── */
+  --navbar-bg:             #2a3535;
+  --navbar-border:         #5A8B81;
+  --navbar-link:           #b0d0cc;
+  --navbar-link-hover:     #5A8B81;
+  --navbar-brand-accent:   #8DB4AD;
+
+  /* ── Footer específico ── */
+  --footer-bg:             #2a3535;
+  --footer-text:           #7aada7;
+  --footer-heading:        #d4eae6;
+  --footer-link:           #5A8B81;
+  --footer-divider:        #3d5452;
+
+  /* ── Hero específico ── */
+  --hero-bg-from:          #2a3535;
+  --hero-bg-mid:           #1e2e2e;
+  --hero-bg-to:            #243030;
+  --hero-grid-color:       rgba(90,139,129,0.04);
+  --hero-badge-bg:         rgba(90,139,129,0.18);
+  --hero-badge-border:     rgba(90,139,129,0.4);
+  --hero-title:            #ecf4f3;
+  --hero-sub:              #8DB4AD;
+  --hero-input-bg:         rgba(255,255,255,0.07);
+  --hero-input-border:     #3d5452;
+  --hero-input-text:       #ecf4f3;
+  --hero-input-placeholder:#5A8B81;
+  --hero-chip-bg:          rgba(255,255,255,0.07);
+  --hero-chip-border:      #3d5452;
+  --hero-chip-text:        #8DB4AD;
+  --hero-divider:          rgba(255,255,255,0.08);
+  --hero-stat-label:       #5A8B81;
+
+  /* ── Tipografía ── */
   --font-family:           'Inter', sans-serif;
   --font-mono:             monospace;
+
+  /* ── Espaciado ── */
   --space-xs:   4px;
   --space-sm:   8px;
   --space-md:   16px;
@@ -34,12 +86,98 @@
   --space-xxl:  64px;
   --container-max: 1280px;
   --gutter:     24px;
+
+  /* ── Radios ── */
   --radius-sm:  2px;
   --radius:     4px;
   --radius-lg:  8px;
   --radius-pill:9999px;
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.08), 0 0 0 1px var(--surface-container-high);
-  --shadow-modal:0 4px 16px rgba(0,0,0,0.14), 0 0 0 1px var(--outline-variant);
+
+  /* ── Sombras ── */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.10), 0 0 0 1px var(--surface-container-high);
+  --shadow-modal:0 4px 16px rgba(0,0,0,0.16), 0 0 0 1px var(--outline-variant);
+
+  /* ── Transiciones ── */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
+}
+
+/* ══════════════════════════════════════════
+   MODO OSCURO — Paleta teal/cian oscuro
+══════════════════════════════════════════ */
+[data-theme="dark"] {
+  /* ── Colores primarios (cian brillante) ── */
+  --primary:               #2a7e7e;        /* cian oscuro activo */
+  --primary-container:     #3FA3A3;        /* cian principal — botones/accents */
+  --on-primary:            #001f1f;
+  --on-primary-container:  #001f1f;
+
+  /* ── Colores secundarios ── */
+  --secondary:             #88D4D4;        /* cian claro */
+  --secondary-container:   #1B3B3B;
+  --on-secondary:          #001f1f;
+  --on-secondary-container:#88D4D4;
+
+  /* ── Colores terciarios ── */
+  --tertiary:              #4fc4c4;
+  --tertiary-container:    #1B3B3B;
+  --on-tertiary:           #001f1f;
+  --on-tertiary-container: #88D4D4;
+
+  /* ── Superficies ── */
+  --surface:               #12191C;
+  --surface-dim:           #0d1315;
+  --surface-container-lowest: #0a1012;
+  --surface-container-low: #161e21;
+  --surface-container:     #1a2326;
+  --surface-container-high:#1e282b;
+  --on-surface:            #d4f0ef;
+  --on-surface-variant:    #88D4D4;
+  --inverse-surface:       #d4f0ef;
+  --outline:               #3FA3A3;
+  --outline-variant:       #1B3B3B;
+
+  /* ── Estado ── */
+  --error:                 #ff6b6b;
+
+  /* ── Background ── */
+  --background:            #12191C;
+  --on-background:         #d4f0ef;
+
+  /* ── Navbar específico ── */
+  --navbar-bg:             #0d1315;
+  --navbar-border:         #3FA3A3;
+  --navbar-link:           #88D4D4;
+  --navbar-link-hover:     #3FA3A3;
+  --navbar-brand-accent:   #88D4D4;
+
+  /* ── Footer específico ── */
+  --footer-bg:             #0d1315;
+  --footer-text:           #4a9090;
+  --footer-heading:        #88D4D4;
+  --footer-link:           #3FA3A3;
+  --footer-divider:        #1B3B3B;
+
+  /* ── Hero específico ── */
+  --hero-bg-from:          #0a1012;
+  --hero-bg-mid:           #0d1315;
+  --hero-bg-to:            #101a1c;
+  --hero-grid-color:       rgba(63,163,163,0.05);
+  --hero-badge-bg:         rgba(63,163,163,0.15);
+  --hero-badge-border:     rgba(63,163,163,0.4);
+  --hero-title:            #d4f0ef;
+  --hero-sub:              #88D4D4;
+  --hero-input-bg:         rgba(255,255,255,0.04);
+  --hero-input-border:     #1B3B3B;
+  --hero-input-text:       #d4f0ef;
+  --hero-input-placeholder:#3FA3A3;
+  --hero-chip-bg:          rgba(63,163,163,0.1);
+  --hero-chip-border:      #1B3B3B;
+  --hero-chip-text:        #88D4D4;
+  --hero-divider:          rgba(255,255,255,0.06);
+  --hero-stat-label:       #3FA3A3;
+
+  /* ── Sombras (más sutiles en dark) ── */
+  --shadow-card: 0 1px 4px rgba(0,0,0,0.4), 0 0 0 1px var(--surface-container-high);
+  --shadow-modal:0 4px 20px rgba(0,0,0,0.5), 0 0 0 1px var(--outline-variant);
 }

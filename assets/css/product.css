@@ -26,7 +26,7 @@
   border-radius: var(--radius-lg); overflow: hidden;
 }
 .specs-title {
-  background: var(--inverse-surface); color: #eceff1;
+  background: var(--navbar-bg); color: var(--footer-heading);
   padding: var(--space-sm) var(--space-md); font-size: 0.8125rem;
   font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;
 }
@@ -44,12 +44,12 @@
 
 /* ── Best price highlight ── */
 .price-best-highlight {
-  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
-  border: 2px solid #a5d6a7; border-radius: var(--radius-lg);
+  background: var(--surface-container-low);
+  border: 2px solid var(--outline-variant); border-radius: var(--radius-lg);
   padding: var(--space-lg); display: flex; align-items: center;
   gap: var(--space-lg); flex-wrap: wrap; margin-bottom: var(--space-md);
 }
-.price-best-label { display: flex; align-items: center; gap: var(--space-xs); font-size: 0.875rem; font-weight: 600; color: #2e7d32; }
+.price-best-label { display: flex; align-items: center; gap: var(--space-xs); font-size: 0.875rem; font-weight: 600; color: var(--primary-container); }
 .price-best-value { display: flex; align-items: baseline; gap: var(--space-xs); }
 .price-best-store { font-size: 0.875rem; color: var(--on-surface-variant); }
 .price-best-highlight .btn { margin-left: auto; }
@@ -57,7 +57,7 @@
 /* ── Price table ── */
 .price-table tbody tr { transition: background var(--transition-fast); }
 .price-table tbody tr:hover { background: var(--surface-container-low) !important; }
-.price-table .best-row { background: rgba(46,125,50,0.05) !important; }
+.price-table .best-row { background: rgba(63,163,163,0.07) !important; }
 .provider-cell { display: flex; align-items: center; gap: var(--space-sm); }
 .provider-logo { font-size: 1.5rem; }
 .provider-name { font-weight: 600; }

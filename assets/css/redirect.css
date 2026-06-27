@@ -1,11 +1,11 @@
 /* redirect.css */
 body.redirect-body {
   min-height: 100vh; display: flex; flex-direction: column;
-  background: linear-gradient(135deg, #1a1f22 0%, #263238 100%);
+  background: linear-gradient(135deg, var(--hero-bg-from) 0%, var(--hero-bg-mid) 100%);
 }
 .redirect-header {
   padding: var(--space-md) var(--space-xl);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid var(--hero-divider);
 }
 .redirect-header .navbar-brand { color: var(--primary-container); }
 .redirect-header .navbar-brand span { color: #ffffff; }

@@ -2,8 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <script>
+    // Aplicar tema antes del primer pintado (evita parpadeo)
+    (function(){
+      var t = localStorage.getItem('cc-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redirigiendo a proveedor — ConstructCompare</title>
+  <title>Redirigiendo a proveedor — MaterialScan</title>
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
@@ -68,7 +76,7 @@
         <p>
           <strong>Aviso Legal:</strong> Al hacer clic en «Ir ahora» o permitir que la redirección se complete,
           serás transferido al sitio web del proveedor (<em id="provider-legal-name">Sodimac</em>).
-          ConstructCompare actúa únicamente como motor de búsqueda y comparador de precios.
+          MaterialScan actúa únicamente como motor de búsqueda y comparador de precios.
           La transacción final, facturación, entrega y garantía del producto serán gestionadas
           enteramente por el proveedor de destino según sus propios términos y condiciones.
         </p>

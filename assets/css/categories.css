@@ -2,7 +2,7 @@
 
 /* ── Page Header ── */
 .cat-page-header {
-  background: linear-gradient(135deg, #1a1f22 0%, #263238 100%);
+  background: linear-gradient(135deg, var(--hero-bg-from) 0%, var(--hero-bg-mid) 100%);
   padding: var(--space-xl) var(--gutter) var(--space-lg);
   border-bottom: 2px solid var(--primary-container);
 }
@@ -14,17 +14,17 @@
 }
 .cat-header-title {
   font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700;
-  color: #eceff1; letter-spacing: -0.02em; margin-bottom: var(--space-sm);
+  color: var(--hero-title); letter-spacing: -0.02em; margin-bottom: var(--space-sm);
 }
-.cat-header-sub { color: #90a4ae; font-size: 1rem; line-height: 1.6; }
+.cat-header-sub { color: var(--hero-sub); font-size: 1rem; line-height: 1.6; }
 .cat-header-stats {
   display: flex; gap: var(--space-xl);
   margin-top: var(--space-lg); padding-top: var(--space-lg);
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid var(--hero-divider);
   max-width: var(--container-max);
 }
 .cat-stat { display: flex; flex-direction: column; gap: 2px; }
-.cat-stat span:last-child { font-size: 0.8rem; color: #78909c; text-transform: uppercase; letter-spacing: 0.05em; }
+.cat-stat span:last-child { font-size: 0.8rem; color: var(--hero-stat-label); text-transform: uppercase; letter-spacing: 0.05em; }
 
 /* ── Main layout ── */
 .cat-main { padding-top: var(--space-xl); padding-bottom: var(--space-xxl); }
