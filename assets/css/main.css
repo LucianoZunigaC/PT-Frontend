@@ -238,3 +238,56 @@ footer .footer-bottom {
   .navbar-brand { font-size: 1rem; }
   footer .footer-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Search Suggestions Dropdown ── */
+.search-suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: var(--surface-container);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  z-index: 1100;
+  list-style: none;
+  padding: var(--space-xs) 0;
+  margin: 0;
+  max-height: 280px;
+  overflow-y: auto;
+}
+.search-suggestions li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--on-surface);
+  transition: background var(--transition-fast);
+}
+.search-suggestions li:hover {
+  background: var(--surface-container-high);
+  color: var(--primary);
+}
+
+/* ── Spin animation (loading states) ── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinning { animation: spin 1s linear infinite; }
+
+/* ── Screen reader only ── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ── Cancel redirect message ── */
+#cancel-msg {
+  display: none;
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+  margin-top: var(--space-sm);
+}
+
