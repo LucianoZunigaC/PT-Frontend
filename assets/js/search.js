@@ -1,4 +1,4 @@
-/* search.js — Página de Resultados de Búsqueda — Conectado al Backend Real */
+/* search.js — Página de Resultados de Búsqueda — Clusters Semánticos */
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── 1. Actualizar títulos y breadcrumb ──────────────────────────────────────
   if (q) {
-    const display   = document.getElementById('query-display');
+    const display    = document.getElementById('query-display');
     const breadcrumb = document.getElementById('breadcrumb-query');
     if (display)    display.textContent  = `"${q}"`;
     if (breadcrumb) breadcrumb.textContent = `Resultados: ${q}`;
@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── 2. Referencias DOM ──────────────────────────────────────────────────────
-  const productsGrid  = document.getElementById('products-grid');
-  const resultsCount  = document.getElementById('results-count');
+  const productsGrid   = document.getElementById('products-grid');
+  const resultsCount   = document.getElementById('results-count');
   const paginationWrap = document.getElementById('pagination');
-  const sortSelect    = document.getElementById('sort-select');
-  const applyPriceBtn = document.getElementById('apply-price');
+  const sortSelect     = document.getElementById('sort-select');
+  const applyPriceBtn  = document.getElementById('apply-price');
   const clearFiltersBtn = document.getElementById('clear-filters');
-  const filterInputs  = document.querySelectorAll('.filters-sidebar input[type="checkbox"]');
+  const filterInputs   = document.querySelectorAll('.filters-sidebar input[type="checkbox"]');
 
   let currentPage = 1;
 
@@ -49,89 +49,95 @@ document.addEventListener('DOMContentLoaded', () => {
       precio_min: minEl?.value || '',
       precio_max: maxEl?.value || '',
       page:       currentPage,
-      limit:      12,
+      limit:      60,
     };
   };
 
-  // ── 4. Renderizar tarjeta de producto ───────────────────────────────────────
-  const renderProductCard = (p) => {
-    const prices     = p.precios || [];
-    const minPrice   = prices.length > 0 ? Number(prices[0].precio)   : 0;
-    const maxPrice   = prices.length > 0 ? Number(prices[prices.length - 1].precio) : 0;
-    const provCount  = prices.length;
-    const bestStore  = prices[0]?.proveedor?.nombre || '';
+  // ── 4. Renderizar un producto individual dentro de un cluster ───────────────
+  const renderClusterProduct = (p) => {
+    const prices    = p.precios || [];
+    const minPrice  = prices.length > 0 ? Number(prices[0].precio) : 0;
+    const bestStore = prices[0]?.proveedor?.nombre || '';
     const productUrl = `product.html?id=${p.id}`;
-    const imgHtml    = p.imagen
-      ? `<img src="${p.imagen}" alt="${p.nombre}" style="width:100%;height:140px;object-fit:contain;" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="spc-emoji" style="display:none">📦</div>`
-      : `<div class="spc-emoji">📦</div>`;
+    const imgHtml = p.imagen
+      ? `<img src="${p.imagen}" alt="${p.nombre}" style="width:60px;height:60px;object-fit:contain;border-radius:6px;flex-shrink:0;" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="cluster-product-emoji" style="display:none">📦</span>`
+      : `<span class="cluster-product-emoji">📦</span>`;
 
-    const savingPct = (maxPrice > 0 && minPrice > 0 && maxPrice > minPrice)
-      ? Math.round(((maxPrice - minPrice) / maxPrice) * 100)
-      : 0;
+    const storeChips = prices.map(pr => {
+      const pName = pr.proveedor?.nombre || '';
+      const pPrice = formatPrice(Number(pr.precio));
+      return `<span class="store-chip" title="${pName}: ${pPrice}">
+        <strong>${pName}</strong> ${pPrice}
+      </span>`;
+    }).join('');
 
     return `
-      <div class="search-product-card">
-        <div class="spc-badges">
-          ${provCount > 0 ? `<span class="badge badge-info">${provCount} tienda${provCount !== 1 ? 's' : ''}</span>` : ''}
-          ${savingPct >= 5 ? `<span class="badge badge-success">↓ -${savingPct}%</span>` : ''}
+      <div class="cluster-product-row">
+        <div class="cluster-product-img">${imgHtml}</div>
+        <div class="cluster-product-info">
+          <a href="${productUrl}" class="cluster-product-name">${p.nombre}</a>
+          ${p.marca ? `<span class="cluster-product-brand">${p.marca}</span>` : ''}
         </div>
-        <div class="spc-thumb">${imgHtml}</div>
-        <div class="spc-body">
-          <div class="spc-category text-muted" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em">
-            ${p.categoria?.nombre || 'General'}
-          </div>
-          <h3 class="spc-name">
-            <a href="${productUrl}">${p.nombre}</a>
-          </h3>
-          <div class="spc-meta">
-            ${p.marca ? `<span class="category-chip" style="font-size:0.7rem">${p.marca}</span>` : ''}
-            ${bestStore ? `<span class="category-chip" style="font-size:0.7rem">${bestStore}</span>` : ''}
-          </div>
-          <div class="spc-price-row">
-            <div>
-              <div class="text-muted" style="font-size:0.75rem">Desde</div>
-              <div class="price-main md price-best">${minPrice > 0 ? formatPrice(minPrice) : '—'}</div>
-            </div>
-            <div class="text-muted" style="font-size:0.75rem;text-align:right">
-              ${maxPrice > minPrice ? `Hasta ${formatPrice(maxPrice)}<br />` : ''}
-              ${provCount > 0 ? `en ${provCount} tienda${provCount !== 1 ? 's' : ''}` : ''}
-            </div>
-          </div>
-          <a href="${productUrl}" class="btn btn-primary" style="width:100%;justify-content:center">
-            Ver comparativa
-          </a>
+        <div class="cluster-product-stores">${storeChips}</div>
+        <div class="cluster-product-price">
+          <span class="price-main md price-best">${minPrice > 0 ? formatPrice(minPrice) : '—'}</span>
+          ${bestStore ? `<span class="cluster-product-store-label">en ${bestStore}</span>` : ''}
         </div>
-      </div>
-    `;
+        <a href="${productUrl}" class="btn btn-secondary btn-sm cluster-product-btn">Comparar</a>
+      </div>`;
   };
 
-  // ── 5. Renderizar paginación ────────────────────────────────────────────────
-  const renderPagination = (page, totalPages) => {
-    if (!paginationWrap) return;
-    if (totalPages <= 1) { paginationWrap.innerHTML = ''; return; }
+  // ── 5. Renderizar un cluster completo ───────────────────────────────────────
+  const renderCluster = (cluster, index) => {
+    const savingPct = (cluster.peorPrecio && cluster.mejorPrecio && cluster.peorPrecio > cluster.mejorPrecio)
+      ? Math.round(((cluster.peorPrecio - cluster.mejorPrecio) / cluster.peorPrecio) * 100)
+      : 0;
 
-    let html = `<button class="page-btn" ${page <= 1 ? 'disabled' : ''} data-page="${page - 1}">
-      <span class="material-icons">chevron_left</span></button>`;
+    const isExpanded = index < 3; // Expandir los 3 primeros clusters por defecto
+    const productsToShow = isExpanded ? cluster.productos : cluster.productos.slice(0, 2);
+    const hiddenCount = cluster.productos.length - productsToShow.length;
 
-    for (let i = 1; i <= totalPages; i++) {
-      if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
-        html += `<button class="page-btn ${i === page ? 'active' : ''}" data-page="${i}">${i}</button>`;
-      } else if (i === page - 2 || i === page + 2) {
-        html += `<span class="page-ellipsis">…</span>`;
-      }
-    }
-
-    html += `<button class="page-btn" ${page >= totalPages ? 'disabled' : ''} data-page="${page + 1}">
-      <span class="material-icons">chevron_right</span></button>`;
-
-    paginationWrap.innerHTML = html;
-    paginationWrap.querySelectorAll('button[data-page]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        currentPage = parseInt(e.currentTarget.getAttribute('data-page'));
-        fetchResults();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    });
+    return `
+      <div class="cluster-card" data-cluster-key="${cluster.clusterKey}">
+        <div class="cluster-header" onclick="this.closest('.cluster-card').classList.toggle('collapsed')">
+          <div class="cluster-title-row">
+            <h3 class="cluster-name">${cluster.nombre}</h3>
+            <div class="cluster-badges">
+              <span class="badge badge-info">${cluster.cantidadProductos} producto${cluster.cantidadProductos !== 1 ? 's' : ''}</span>
+              <span class="badge badge-secondary">${cluster.cantidadProveedores} tienda${cluster.cantidadProveedores !== 1 ? 's' : ''}</span>
+              ${savingPct >= 5 ? `<span class="badge badge-success">↓ Ahorra hasta ${savingPct}%</span>` : ''}
+            </div>
+          </div>
+          <div class="cluster-price-range">
+            <div class="cluster-price-block">
+              <span class="cluster-price-label">Desde</span>
+              <span class="price-main md price-best">${cluster.mejorPrecio ? formatPrice(cluster.mejorPrecio) : '—'}</span>
+            </div>
+            ${cluster.peorPrecio && cluster.peorPrecio > cluster.mejorPrecio ? `
+            <div class="cluster-price-block">
+              <span class="cluster-price-label">Hasta</span>
+              <span class="price-main md price-worst">${formatPrice(cluster.peorPrecio)}</span>
+            </div>` : ''}
+            ${cluster.marcas && cluster.marcas.length > 0 ? `
+            <div class="cluster-brands">
+              ${cluster.marcas.slice(0, 5).map(m => `<span class="category-chip">${m}</span>`).join('')}
+              ${cluster.marcas.length > 5 ? `<span class="category-chip">+${cluster.marcas.length - 5}</span>` : ''}
+            </div>` : ''}
+          </div>
+          <span class="material-icons cluster-toggle-icon">expand_more</span>
+        </div>
+        <div class="cluster-body">
+          ${productsToShow.map(p => renderClusterProduct(p)).join('')}
+          ${hiddenCount > 0 ? `
+            <button class="cluster-show-more" onclick="event.stopPropagation(); this.closest('.cluster-card').classList.add('show-all'); this.remove();">
+              <span class="material-icons" style="font-size:16px">expand_more</span>
+              Ver ${hiddenCount} producto${hiddenCount !== 1 ? 's' : ''} más
+            </button>
+            <div class="cluster-hidden-products">
+              ${cluster.productos.slice(productsToShow.length).map(p => renderClusterProduct(p)).join('')}
+            </div>` : ''}
+        </div>
+      </div>`;
   };
 
   // ── 6. Renderizar facetas dinámicas ─────────────────────────────────────────
@@ -162,9 +168,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // ── 7. Estado vacío con mensaje de scraping en curso ────────────────────────
+  // ── 7. Estado vacío ────────────────────────────────────────────────────────
   const renderEmpty = (termino) => `
-    <div style="text-align:center;width:100%;padding:60px 20px;grid-column:1/-1;">
+    <div style="text-align:center;width:100%;padding:60px 20px;">
       <span class="material-icons" style="font-size:48px;color:var(--primary);opacity:0.5">search_off</span>
       <h3 style="margin-top:16px">No encontramos resultados para "${termino}"</h3>
       <p style="color:var(--on-surface-variant);max-width:400px;margin:8px auto">
@@ -179,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!productsGrid) return;
 
     productsGrid.innerHTML = `
-      <div style="text-align:center;width:100%;padding:60px;grid-column:1/-1;">
+      <div style="text-align:center;width:100%;padding:60px;">
         <span class="material-icons" style="font-size:48px;color:var(--primary);animation:spin 1s linear infinite">refresh</span>
         <p style="margin-top:12px;color:var(--on-surface-variant)">Buscando mejores precios…</p>
       </div>`;
@@ -201,33 +207,36 @@ document.addEventListener('DOMContentLoaded', () => {
       // Actualizar contador
       if (resultsCount) {
         if (data.total > 0) {
-          const start = (data.page - 1) * data.limit + 1;
-          const end   = Math.min(data.page * data.limit, data.total);
-          resultsCount.textContent = `Mostrando ${start}–${end} de ${data.total} resultados`;
+          const clusterCount = data.clusters?.length || 0;
+          resultsCount.textContent = `${data.total} resultados en ${clusterCount} grupo${clusterCount !== 1 ? 's' : ''}`;
         } else {
           resultsCount.textContent = '0 resultados encontrados';
         }
       }
 
-      // Renderizar productos
-      if (data.productos && data.productos.length > 0) {
-        productsGrid.innerHTML = data.productos.map(renderProductCard).join('');
+      // Renderizar clusters o estado vacío
+      if (data.clusters && data.clusters.length > 0) {
+        productsGrid.innerHTML = data.clusters.map((c, i) => renderCluster(c, i)).join('');
+        productsGrid.classList.add('cluster-view');
+      } else if (data.productos && data.productos.length > 0) {
+        // Fallback a lista plana si no hay clusters
+        productsGrid.innerHTML = data.productos.map(p => renderClusterProduct(p)).join('');
+        productsGrid.classList.remove('cluster-view');
       } else {
         productsGrid.innerHTML = renderEmpty(q || cat || '');
       }
 
-      renderPagination(data.page, data.totalPages);
       renderFacets(data.facetas);
 
     } catch (err) {
       console.error('[Search] Error al obtener resultados:', err);
       const isTimeout = err.name === 'TimeoutError';
       productsGrid.innerHTML = `
-        <div style="text-align:center;width:100%;padding:60px;grid-column:1/-1;color:var(--error);">
+        <div style="text-align:center;width:100%;padding:60px;color:var(--error);">
           <span class="material-icons" style="font-size:48px">wifi_off</span>
           <h3 style="margin-top:16px">${isTimeout ? 'La búsqueda tardó demasiado' : 'Error de conexión'}</h3>
           <p style="color:var(--on-surface-variant);margin-top:8px">
-            ${isTimeout ? 'El servidor está procesando tu solicitud. Intenta en unos segundos.' : (err.message || 'No pudimos contactar al servidor. Verifica que el backend esté activo.')}
+            ${isTimeout ? 'El servidor está procesando tu solicitud. Intenta en unos segundos.' : (err.message || 'No pudimos contactar al servidor.')}
           </p>
           <button class="btn btn-primary" style="margin-top:16px" onclick="location.reload()">Reintentar</button>
         </div>`;
@@ -240,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     if (productsGrid) {
       productsGrid.innerHTML = `
-        <div style="text-align:center;width:100%;padding:60px;grid-column:1/-1;">
+        <div style="text-align:center;width:100%;padding:60px;">
           <span class="material-icons" style="font-size:48px;color:var(--primary);opacity:0.5">manage_search</span>
           <h3 style="margin-top:16px">Ingresa un término de búsqueda</h3>
           <p style="color:var(--on-surface-variant)">Usa la barra de búsqueda para encontrar materiales y herramientas.</p>
@@ -268,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchResults();
   });
 
-  // ── 11. Toggle vista grid / lista ───────────────────────────────────────────
+  // ── 11. Toggle vista (mantener para no romper UX) ──────────────────────────
   const gridBtn = document.getElementById('view-grid');
   const listBtn = document.getElementById('view-list');
 
@@ -276,21 +285,14 @@ document.addEventListener('DOMContentLoaded', () => {
     productsGrid?.classList.remove('list-view');
     gridBtn.classList.add('active');
     listBtn?.classList.remove('active');
-    localStorage.setItem('ms-view', 'grid');
   });
   listBtn?.addEventListener('click', () => {
     productsGrid?.classList.add('list-view');
     listBtn.classList.add('active');
     gridBtn?.classList.remove('active');
-    localStorage.setItem('ms-view', 'list');
   });
 
-  // Restaurar preferencia de vista
-  if (localStorage.getItem('ms-view') === 'list') {
-    listBtn?.click();
-  }
-
-  // ── 12. Toggle filtros (colapsar/expandir) ──────────────────────────────────
+  // ── 12. Toggle filtros ─────────────────────────────────────────────────────
   document.querySelectorAll('.filter-title').forEach(title => {
     title.addEventListener('click', () => {
       const group = title.closest('.filter-group');
@@ -304,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── 13. Sugerencias de búsqueda en navbar ───────────────────────────────────
+  // ── 13. Sugerencias de búsqueda en navbar ──────────────────────────────────
   const searchInput = document.getElementById('search-input');
   if (searchInput) {
     let suggestionBox = null;
@@ -330,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = `search.html?q=${encodeURIComponent(li.dataset.value)}`;
           });
         });
-      } catch { /* silenciar errores de sugerencias */ }
+      } catch { /* silenciar */ }
     }, 300);
 
     searchInput.addEventListener('input', (e) => fetchSuggestions(e.target.value));

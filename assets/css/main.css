@@ -291,3 +291,251 @@ footer .footer-bottom {
   margin-top: var(--space-sm);
 }
 
+/* ── Clusters de Búsqueda ── */
+.cluster-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.cluster-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base);
+}
+
+.cluster-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.cluster-header {
+  padding: var(--space-md);
+  background: var(--surface-variant);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  position: relative;
+}
+
+.cluster-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  padding-right: 32px;
+}
+
+.cluster-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--on-surface);
+}
+
+.cluster-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.cluster-badges .badge {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.badge-info { background: #e3f2fd; color: #0277bd; }
+.badge-secondary { background: var(--surface); border: 1px solid var(--border); color: var(--on-surface-variant); }
+.badge-success { background: #e8f5e9; color: #2e7d32; font-weight: 600; }
+
+.cluster-price-range {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cluster-price-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.cluster-price-label {
+  font-size: 0.75rem;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cluster-brands {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.cluster-toggle-icon {
+  position: absolute;
+  right: var(--space-md);
+  top: var(--space-md);
+  color: var(--on-surface-variant);
+  transition: transform var(--transition-base);
+}
+
+.cluster-card.collapsed .cluster-toggle-icon {
+  transform: rotate(-90deg);
+}
+
+.cluster-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.cluster-card.collapsed .cluster-body {
+  display: none;
+}
+
+.cluster-product-row {
+  display: flex;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--border);
+  gap: var(--space-md);
+  transition: background var(--transition-base);
+}
+
+.cluster-product-row:last-child {
+  border-bottom: none;
+}
+
+.cluster-product-row:hover {
+  background: var(--background);
+}
+
+.cluster-product-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.cluster-product-emoji {
+  font-size: 24px;
+}
+
+.cluster-product-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cluster-product-name {
+  font-weight: 500;
+  color: var(--on-surface);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cluster-product-name:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.cluster-product-brand {
+  font-size: 0.8125rem;
+  color: var(--on-surface-variant);
+}
+
+.cluster-product-stores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 200px;
+}
+
+.store-chip {
+  font-size: 0.75rem;
+  background: var(--surface-variant);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--on-surface-variant);
+  white-space: nowrap;
+}
+
+.cluster-product-price {
+  text-align: right;
+  min-width: 100px;
+}
+
+.cluster-product-store-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--on-surface-variant);
+}
+
+.cluster-product-btn {
+  white-space: nowrap;
+}
+
+.cluster-show-more {
+  width: 100%;
+  background: var(--surface-variant);
+  border: none;
+  border-top: 1px solid var(--border);
+  padding: 8px;
+  color: var(--primary);
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: background var(--transition-base);
+}
+
+.cluster-show-more:hover {
+  background: var(--border);
+}
+
+.cluster-hidden-products {
+  display: none;
+  flex-direction: column;
+}
+
+.cluster-card.show-all .cluster-hidden-products {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .cluster-product-row {
+    flex-wrap: wrap;
+  }
+  .cluster-product-info {
+    min-width: 100%;
+  }
+  .cluster-product-stores {
+    display: none;
+  }
+  .cluster-price-range {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .cluster-brands {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+}

@@ -2,10 +2,8 @@
 'use strict';
 
 /**
- * URL base del backend. Si en producción se usa otro dominio,
- * sólo hay que cambiar esta variable.
- *
- * Para desarrollo local: http://localhost:3000/api
- * Para producción: cambia a la URL del servidor desplegado.
+ * URL base del backend.
+ * Al usar una ruta relativa, funciona tanto localmente como a través del túnel público
+ * de forma nativa e instantánea sin problemas de CORS ni pantallas de bloqueo.
  */
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = '/api';
